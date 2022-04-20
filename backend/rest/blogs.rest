@@ -1,0 +1,10 @@
+GET http://localhost:5000/api/blogPosts
+
+###
+POST http://localhost:5000/api/blogPosts
+
+###
+PUT http://localhost:5000/api/blogPosts/4534
+
+###
+DELETE http://localhost:5000/api/blogPosts/4353

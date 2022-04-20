@@ -1,12 +1,15 @@
 import './App.css';
+import PostForm from './components/PostForm';
 
 function App() {
   return (
     <div className="App">
       <header>
-       hejhejhej
+        <h1>Just testing...</h1>
+       <PostForm/>
       </header>
     </div>
+    
   );
 }
 

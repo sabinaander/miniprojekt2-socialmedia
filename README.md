@@ -1,3 +1,19 @@
+All packages used to create this project: 
+npx create-react-app socialmedia
+cd socialmedia
+
+npm i: 
+express
+nodemon
+mongodb
+mongoose
+cors
+concurrently
+cross-env
+express-async-handler
+colors
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
