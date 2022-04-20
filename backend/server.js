@@ -14,6 +14,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/blogPosts', require('./routes/blogPostRoutes'))
+app.use('/api/users', require('./routes/userRoutes'))
 
 
 app.listen(port, () => {

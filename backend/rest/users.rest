@@ -1,0 +1,10 @@
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+  "email": "blaha@blala.com",
+  "password": "1234"
+}
+
+###
+GET http://localhost:5000/api/users

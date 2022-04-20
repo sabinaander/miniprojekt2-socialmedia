@@ -16,6 +16,7 @@ const addBlogPosts = asyncHandler( async (req, res) =>{
   }
 
   const blog = await Post.create({
+     
     text: req.body.text
   })
 
