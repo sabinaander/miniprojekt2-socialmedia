@@ -1,5 +1,5 @@
 import { Box, Image } from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 function PostCard() {
   const post = {
@@ -47,7 +47,7 @@ function PostCard() {
         </Box>
 
         <Box display="flex" mt="2" alignItems="center">
-          <FontAwesomeIcon icon={"fa-heart"} />
+        <FavoriteIcon fontSize="medium" color="action" />
           Like
           <Box as="span" ml="2" fontSize="sm">
             {post.likes} likes
