@@ -25,7 +25,15 @@ function ProfilePage() {
         Posts by Capt'n
         {/* {user.username} */}
       </Text>
-      <Grid templateColumns="repeat(3, 1fr)" gap={6} mt={5}>
+      <Grid
+        templateColumns={{
+          base: "1fr",
+          md: "repeat(2, 1fr)",
+          lg: "repeat(3, 1fr)",
+        }}
+        gap={6}
+        mt={5}
+      >
         <PostCard />
         <PostCard />
         <PostCard />
