@@ -1,15 +1,18 @@
 import { Outlet } from "react-router-dom";
+import { Flex } from "@chakra-ui/react";
 import "../App.css"
-import StartPage from "../pages/StartPage";
 import Header from "./Header";
-import PostForm from "./PostForm";
+import SideBar from "./SideBar";
 
 function Layout() {
   return (
     <div className="App">
       <header>
         <Header />
+        <Flex>
+        <SideBar/>
         <Outlet/>
+        </Flex>
       </header>
     </div>
   );
