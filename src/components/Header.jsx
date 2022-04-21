@@ -3,7 +3,6 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
-  Box,
   Center,
   Heading,
   Spacer,
@@ -16,7 +15,7 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { Link } from "react-router-dom";
@@ -50,13 +49,12 @@ function Header() {
         <Spacer />
         <Center>
           <Flex gap={6}>
-            <Box display={{ base: "block", md: "none" }}>
+            <Button display={{ base: "block", md: "none" }} onClick={loginModal.onOpen}>
               <PersonOutlineIcon fontSize="medium" color="action" />
-            </Box>
+            </Button>
 
             {/* LOG IN MODAL */}
-            <Box
-              as="button"
+            <Button
               borderRadius="md"
               onClick={loginModal.onOpen}
               bg="#00A3C4"
@@ -78,16 +76,23 @@ function Header() {
                   <ModalBody pb={6}>
                     <LoginForm />
                   </ModalBody>
-                  <ModalFooter>
-                    <Button>Sign up</Button>
+                  <ModalFooter gap="1rem">
+                    <Button
+                      onClick={() => {
+                        loginModal.onClose();
+                        signupModal.onOpen();
+                      }}
+                    >
+                      Sign up
+                    </Button>
                     <Button onClick={loginModal.onClose}>Cancel</Button>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
-            </Box>
+            </Button>
 
             {/* SIGN UP MODAL */}
-            <Box
+            <Button
               as="button"
               borderRadius="md"
               onClick={signupModal.onOpen}
@@ -110,13 +115,20 @@ function Header() {
                   <ModalBody pb={6}>
                     <LoginForm />
                   </ModalBody>
-                  <ModalFooter>
-                    <Button>Sign up</Button>
+                  <ModalFooter gap="1rem">
+                    <Button
+                      onClick={() => {
+                        signupModal.onClose();
+                        loginModal.onOpen();
+                      }}
+                    >
+                      Log in
+                    </Button>
                     <Button onClick={signupModal.onClose}>Cancel</Button>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
-            </Box>
+            </Button>
           </Flex>
         </Center>
       </Flex>
