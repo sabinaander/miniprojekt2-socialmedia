@@ -16,12 +16,12 @@ import { SearchIcon } from "@chakra-ui/icons";
 
 function Header() {
   return (
-    <Container maxW="100%">
+    <Container maxW="100%" border='1px' padding={2} borderColor='gray.200'>
       <Flex>
         <Center gap={10}>
           <Link to="/">
             <Heading as="h1" size="2xl">
-              Hey Socialmedia
+              Socialmblr
             </Heading>
           </Link>
 
@@ -30,7 +30,7 @@ function Header() {
               pointerEvents="none"
               children={<SearchIcon color="gray.300" />}
             />
-            <Input type="tel" placeholder="Search for posts" />
+            <Input placeholder="Search for posts..." />
           </InputGroup>
         </Center>
 

@@ -12,10 +12,9 @@ function PostForm() {
   }
 
   return (
-    <Flex bg="gray.100" align="center" justify="center" h="100vh">
+    <Flex align="center" justify="center">
       <Box bg="white" p={6} rounded="md">
         <form onSubmit={handleSubmit(onSubmit)}>
-            <h3>Create a post</h3>
           <VStack spacing={4} align="flex-start">
             <FormControl>
               <Stack>
