@@ -1,11 +1,10 @@
 // GET DATA FROM DB
 
-export default function authHeader() {
-    const user = JSON.parse(('./') )
+export default function authHeader(token) {
 
-    if (user && user.accessToken) {
-        return{'x-access-token': user.accessToken}
-    } else{
-        return{}
+    if (!token) {
+        return
     }
+    return { 'Authorization': `Bearer ${token}` }
+
 }
