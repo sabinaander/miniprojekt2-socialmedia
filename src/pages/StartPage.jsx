@@ -4,7 +4,7 @@ import Header from '../components/Header';
 function StartPage() {
   return ( 
     <Container>
-      <Header />
+      
     </Container>
    );
 }
