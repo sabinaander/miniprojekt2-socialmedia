@@ -7,8 +7,6 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Wrap,
-  WrapItem,
   Avatar,
   Center,
 } from "@chakra-ui/react";
@@ -19,17 +17,19 @@ import PostForm from "../components/PostForm";
 function CreatePostModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    
-      <Center padding="0.5rem" gap="2rem" w="100%" mb={3}>
-        <Avatar
-          size="xl"
-          name="America, fuck yeaa!"
-          src="https://static.feber.se/article_images/50/72/03/507203_1280.jpg"
-        />{" "}
-        <Button onClick={onOpen} colorScheme="teal" w="15rem">
-          Create A Post
-        </Button>
-      
+    <Center padding="0.5rem" gap={{base:"0.5rem", lg: "2rem"}} w="100%" mb={3}>
+      <Avatar
+        size="xl"
+        name="America, fuck yeaa!"
+        src="https://static.feber.se/article_images/50/72/03/507203_1280.jpg"
+      />
+      <Button
+        onClick={onOpen}
+        colorScheme="teal"
+        w={{ base: "8rem", md: "12rem", lg: "15rem" }}
+      >
+        Create A Post
+      </Button>
       <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -44,7 +44,7 @@ function CreatePostModal() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      </Center>
+    </Center>
   );
 }
 

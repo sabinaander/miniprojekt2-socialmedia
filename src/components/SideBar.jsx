@@ -15,34 +15,34 @@ function SideBar() {
         <Link to="/">
           <Flex gap="2rem" mb={5}>
             <HomeIcon fontSize="medium" color="action" />
-            <Text fontSize="lg">Home</Text>
+            <Text fontSize="lg" display={{base:"none", md:"block"}}>Home</Text>
           </Flex>
         </Link>
 
         <Link to="/explore">
           <Flex gap="2rem" mb={5}>
             <TagIcon fontSize="medium" color="action" />
-            <Text fontSize="lg">Explore</Text>
+            <Text fontSize="lg" display={{base:"none", md:"block"}}>Explore</Text>
           </Flex>
         </Link>
 
         <Link to="/notifications">
           <Flex gap="2rem" mb={5}>
             <NotificationsNoneIcon fontSize="medium" color="action" />
-            <Text fontSize="lg">Notifications</Text>
+            <Text fontSize="lg" display={{base:"none", md:"block"}}>Notifications</Text>
           </Flex>
         </Link>
 
         <Link to="/profile">
           <Flex gap="2rem" mb={5}>
             <PersonOutlineIcon fontSize="medium" color="action" />
-            <Text fontSize="lg">Profile</Text>
+            <Text fontSize="lg" display={{base:"none", md:"block"}}>Profile</Text>
           </Flex>
         </Link>
         <Link to="/settings">
           <Flex gap="2rem" mb={5}>
             <MoreHorizIcon fontSize="medium" color="action" />
-            <Text fontSize="lg">More</Text>
+            <Text fontSize="lg" display={{base:"none", md:"block"}}>More</Text>
           </Flex>
         </Link>
       </Flex>

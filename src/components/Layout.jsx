@@ -10,6 +10,7 @@ function Layout() {
       <header>
         <Header />
         <Flex>
+          {/* Only show this if logged in */}
         <SideBar/>
         <Outlet/>
         </Flex>
