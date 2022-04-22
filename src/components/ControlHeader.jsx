@@ -1,10 +1,11 @@
-import { Flex, Container, Spacer, Box } from "@chakra-ui/react";
+import { Flex, Container, Spacer, Box, Button } from "@chakra-ui/react";
 
 import { Link } from "react-router-dom";
 
 import HomeIcon from "@mui/icons-material/Home";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { logout } from "../features/login-auth/loginauth";
 
 function ControlHeader() {
   return (
@@ -22,7 +23,7 @@ function ControlHeader() {
               <Link to="/settings">
                 <MoreHorizIcon fontSize="medium" color="action" />
               </Link>
-              <Link to="/logout">
+              <Button onClick={logout}>
                 <Box
                   as="button"
                   borderRadius="md"
@@ -33,7 +34,7 @@ function ControlHeader() {
                 >
                   Log Out
                 </Box>
-              </Link>
+              </Button>
             </Flex>
           </Link>
         </Flex>
