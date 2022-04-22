@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 import HomeIcon from "@mui/icons-material/Home";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { logout } from "../features/login-auth/loginauth";
+import { SettingsIcon } from "@chakra-ui/icons";
 
 function ControlHeader() {
   return (
@@ -21,7 +21,7 @@ function ControlHeader() {
                 <NotificationsNoneIcon fontSize="medium" color="action" />
               </Link>
               <Link to="/settings">
-                <MoreHorizIcon fontSize="medium" color="action" />
+                <SettingsIcon fontSize="medium" color="action" />
               </Link>
               <Button onClick={logout}>
                 <Box

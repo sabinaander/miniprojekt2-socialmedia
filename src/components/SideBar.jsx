@@ -6,7 +6,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import TagIcon from "@mui/icons-material/Tag";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { SettingsIcon } from "@chakra-ui/icons";
 
 function SideBar() {
   return (
@@ -41,8 +41,8 @@ function SideBar() {
         </Link>
         <Link to="/settings">
           <Flex gap="2rem" mb={5}>
-            <MoreHorizIcon fontSize="medium" color="action" />
-            <Text fontSize="lg" display={{base:"none", md:"block"}}>More</Text>
+            <SettingsIcon fontSize="medium" color="action" />
+            <Text fontSize="lg" display={{base:"none", md:"block"}}>Settings</Text>
           </Flex>
         </Link>
       </Flex>

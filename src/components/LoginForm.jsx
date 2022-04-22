@@ -33,7 +33,7 @@ function LoginForm() {
 
     try {
       const user = await login(email, password);
-      console.log(user)
+      
       setEmail("");
       setPassword("");
 

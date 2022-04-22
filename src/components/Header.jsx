@@ -31,7 +31,7 @@ function Header() {
   const signupModal = useDisclosure();
 
   return (
-    <Container maxW="100%" border="1px" padding={2} borderColor="gray.200">
+    <Container maxW="100%" borderBottom="1px" padding={2} borderColor="gray.200">
       <Flex>
         <Center gap={10}>
           <Link to="/">
