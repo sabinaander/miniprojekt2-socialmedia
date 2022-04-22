@@ -33,7 +33,7 @@ function SideBar() {
           </Flex>
         </Link>
 
-        <Link to="/profile">
+        <Link to="/profile/:username">
           <Flex gap="2rem" mb={5}>
             <PersonOutlineIcon fontSize="medium" color="action" />
             <Text fontSize="lg" display={{base:"none", md:"block"}}>Profile</Text>
