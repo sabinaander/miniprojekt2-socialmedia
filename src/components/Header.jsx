@@ -16,12 +16,15 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Text,
+  color
 } from "@chakra-ui/react";
 
 import { Link } from "react-router-dom";
 import { SearchIcon } from "@chakra-ui/icons";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 
 function Header() {
   const loginModal = useDisclosure();
@@ -77,14 +80,15 @@ function Header() {
                     <LoginForm />
                   </ModalBody>
                   <ModalFooter gap="1rem">
-                    <Button
+                  <Text
+                    cursor="pointer"
                       onClick={() => {
                         loginModal.onClose();
                         signupModal.onOpen();
                       }}
                     >
                       Sign up
-                    </Button>
+                    </Text>
                     <Button onClick={loginModal.onClose}>Cancel</Button>
                   </ModalFooter>
                 </ModalContent>
@@ -113,17 +117,18 @@ function Header() {
                   <ModalHeader>Sign up</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody pb={6}>
-                    <LoginForm />
+                    <SignupForm/>
                   </ModalBody>
                   <ModalFooter gap="1rem">
-                    <Button
+                    <Text
+                    cursor="pointer"
                       onClick={() => {
                         signupModal.onClose();
                         loginModal.onOpen();
                       }}
                     >
                       Log in
-                    </Button>
+                    </Text>
                     <Button onClick={signupModal.onClose}>Cancel</Button>
                   </ModalFooter>
                 </ModalContent>
