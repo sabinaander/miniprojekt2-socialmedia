@@ -10,7 +10,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (!username || !email || !password) {
     res.status(400)
-    res.send('Please fill in all fields')
+    res.send({message:'Please fill in all fields'})
     return
   }
 
@@ -19,7 +19,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (userExist) {
     res.status(400)
-    res.send('User already exists.')
+    res.send({message:'User already exists.'})
     return
   }
 
@@ -34,7 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(400)
-    res.send('Invalid user data')
+    res.send({message:'Invalid user data'})
     return
   }
 
@@ -58,13 +58,13 @@ const loginUser = asyncHandler(async (req, res) => {
   // checks to see if user exists
   if (!user) {
     res.status(400)
-    res.send('Incorrect login details')
+    res.send({message:'Incorrect login details'})
     return
   }
   // checks password
   if (!await bcrypt.compare(password, user.password)) {
     res.status(400)
-    res.send('Incorrect login details')
+    res.send({message:'Incorrect login details'})
     return
   }
 
@@ -87,7 +87,7 @@ const getUser = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(400)
-    res.send('This user does not exist.')
+    res.send({message:'This user does not exist.'})
     return
   }
 
@@ -102,12 +102,12 @@ const deleteUser = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(400)
-    res.send('This user does not exist.')
+    res.send({message:'This user does not exist.'})
     return
   }
 
   await User.findByIdAndDelete(id)
-  res.send('user has been deleted.')
+  res.send({message:'user has been deleted.'})
 })
 
 
@@ -118,7 +118,7 @@ const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({})
 
   if (!users) {
-    res.send('No users can be found.')
+    res.send({message:'No users can be found.'})
     return
   }
 
