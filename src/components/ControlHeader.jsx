@@ -23,17 +23,18 @@ function ControlHeader() {
               <Link to="/settings">
                 <SettingsIcon fontSize="medium" color="action" />
               </Link>
-              <Button onClick={logout}>
-                <Box
-                  as="button"
-                  borderRadius="md"
-                  bg="black"
-                  color="white"
-                  px={4}
-                  h={7}
-                >
-                  Log Out
-                </Box>
+              <Button
+                onClick={logout}
+                borderRadius="md"
+                bg="black"
+                color="white"
+                px={4}
+                h={7}
+                _hover={{
+                  background: "gray.600"
+                }}
+              >
+                Log Out
               </Button>
             </Flex>
           </Link>
