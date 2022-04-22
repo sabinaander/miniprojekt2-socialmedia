@@ -87,7 +87,7 @@ function Header() {
                         signupModal.onOpen();
                       }}
                     >
-                      Sign up
+                      Signup
                     </Text>
                     <Button onClick={loginModal.onClose}>Cancel</Button>
                   </ModalFooter>
@@ -95,7 +95,7 @@ function Header() {
               </Modal>
             </Button>
 
-            {/* SIGN UP MODAL */}
+            {/* SIGNUP MODAL */}
             <Button
               as="button"
               borderRadius="md"
@@ -106,7 +106,7 @@ function Header() {
               h={8}
               display={{ base: "none", md: "block" }}
             >
-              Sign up
+              Signup
               <Modal
                 closeOnOverlayClick={false}
                 isOpen={signupModal.isOpen}
