@@ -17,12 +17,12 @@ import {
       formState: { isSubmitting },
     } = useForm();  
 
-    function handleSubmit() {
-      console.log('hej')
-    }
+    function onSubmit() {
+        console.log('hej')
+      }
 
     return (
-        <Flex bg="gray.100" align="center" justify="center" h="100vh">
+        <Flex align="center" justify="center" h="30vh">
            <Box bg="white" p={6} rounded="md" w={64}>
              <form onSubmit={handleSubmit(onSubmit)}>
               <VStack>
