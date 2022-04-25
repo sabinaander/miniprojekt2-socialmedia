@@ -9,7 +9,8 @@ import {
   Button,
   Avatar,
   Center,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react'
+
 
 import { useDisclosure } from "@chakra-ui/react";
 import {  useState } from "react";
@@ -40,7 +41,7 @@ function CreatePostModal() {
       <Button
         onClick={onOpen}
         colorScheme="teal"
-        w={{ base: "8rem", md: "12rem", lg: "15rem" }}
+        w={{ base: '8rem', md: '12rem', lg: '15rem' }}
       >
         Create A Post
       </Button>
@@ -50,7 +51,7 @@ function CreatePostModal() {
           <ModalHeader>Write something..</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <PostForm />
+            <PostForm onClose={onClose} />
           </ModalBody>
 
           <ModalFooter>
@@ -59,7 +60,7 @@ function CreatePostModal() {
         </ModalContent>
       </Modal>
     </Center>
-  );
+  )
 }
 
-export default CreatePostModal;
+export default CreatePostModal

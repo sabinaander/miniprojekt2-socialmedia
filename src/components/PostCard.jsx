@@ -1,7 +1,13 @@
 import { Box, Image } from '@chakra-ui/react'
 import FavoriteIcon from '@mui/icons-material/Favorite'
+import { parseISO, formatDistanceToNow } from 'date-fns'
 
 function PostCard({ post }) {
+  let timeAgo = ''
+  const date = parseISO(post.createdAt)
+  const timePeriod = formatDistanceToNow(date)
+  timeAgo = `${timePeriod} ago`
+
   return (
     <Box
       key={post._id}
@@ -23,7 +29,7 @@ function PostCard({ post }) {
             textTransform="uppercase"
             ml="2"
           >
-            {post.author} &bull; {post.createdAt}
+            {post.author} &bull; {timeAgo}
           </Box>
         </Box>
 
@@ -38,7 +44,7 @@ function PostCard({ post }) {
         </Box>
 
         <Box>
-          {post.description}
+          {post.content}
           <Box as="span" color="gray.600" fontSize="sm"></Box>
         </Box>
 

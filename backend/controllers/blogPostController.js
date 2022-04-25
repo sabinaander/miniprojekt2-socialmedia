@@ -34,6 +34,7 @@ const addBlogPosts = asyncHandler(async (req, res) => {
     title: req.body.title,
     content: req.body.content,
     imageUrl: req.body.imageUrl,
+    author: req.body.author,
   })
 
   res.status(200).json(blog)
