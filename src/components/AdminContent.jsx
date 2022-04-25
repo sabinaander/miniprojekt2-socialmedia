@@ -9,9 +9,11 @@ import {
   Td,
   TableContainer,
   Heading,
+  Button,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 const API_URL = 'http://localhost:5000/api/users/';
 
@@ -42,7 +44,18 @@ function AdminContent() {
                 <Tr key={index}>
                   <Td>{user.username}</Td>
                   <Td>{user.role.name}</Td>
-                  <Td>Action</Td>
+                  <Td>
+                    <Button
+                      rightIcon={<DeleteIcon />}
+                      onClick={() =>
+                        axios
+                          .delete('http://localhost:5000/api/users/' + user._id)
+                          .then((res) => console.log(res.data))
+                      }
+                    >
+                      Delete
+                    </Button>
+                  </Td>
                 </Tr>
               ))}
             </Tbody>
