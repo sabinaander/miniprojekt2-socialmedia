@@ -6,22 +6,23 @@ import {
   Tbody,
   Tr,
   Th,
-  Td,
   TableContainer,
   Heading,
-  Button,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DeleteIcon } from '@chakra-ui/icons';
+import AdminUserDetails from './AdminUserDetails';
 
-const API_URL = 'http://localhost:5000/api/users/';
+const API_URL_GET_USERS = 'http://localhost:5000/api/users/';
+const API_URL_GET_ROLES = 'http://localhost:5000/api/users/roles/';
 
 function AdminContent() {
   const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    axios.get(API_URL).then((res) => setUsers(res.data));
+    axios.get(API_URL_GET_USERS).then((res) => setUsers(res.data));
+    axios.get(API_URL_GET_ROLES).then((res) => setRoles(res.data));
   }, []);
 
   return (
@@ -41,22 +42,7 @@ function AdminContent() {
             </Thead>
             <Tbody>
               {users.map((user, index) => (
-                <Tr key={index}>
-                  <Td>{user.username}</Td>
-                  <Td>{user.role.name}</Td>
-                  <Td>
-                    <Button
-                      rightIcon={<DeleteIcon />}
-                      onClick={() =>
-                        axios
-                          .delete('http://localhost:5000/api/users/' + user._id)
-                          .then((res) => console.log(res.data))
-                      }
-                    >
-                      Delete
-                    </Button>
-                  </Td>
-                </Tr>
+                <AdminUserDetails key={index} user={user} roles={roles} />
               ))}
             </Tbody>
           </Table>

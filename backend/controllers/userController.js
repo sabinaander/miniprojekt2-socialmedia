@@ -29,11 +29,16 @@ const registerUser = asyncHandler(async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
+  // Get default role
+  const userRole = (await Role.find({ name: 'user' })).pop();
+  console.log(userRole);
+
   // Create user
   const user = await User.create({
     username,
     email,
     password: hashedPassword,
+    role: userRole,
   });
 
   if (!user) {
@@ -135,6 +140,31 @@ const deleteUser = asyncHandler(async (req, res) => {
   res.send({ message: 'user has been deleted.' });
 });
 
+// update user, right now you can only update a users role
+const updateUser = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const roleId = req.body.role;
+
+  const user = await User.findById(id);
+  if (!user) {
+    res.status(400);
+    res.send({ message: 'This user does not exist.' });
+    return;
+  }
+
+  const role = await Role.findById(roleId);
+  if (!role) {
+    res.status(400);
+    res.send({ message: 'The specified role does not exist.' });
+    return;
+  }
+
+  user.role = role;
+  user.save();
+
+  res.send({ message: 'user has been deleted.' });
+});
+
 // Get all users
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find().populate('role');
@@ -146,6 +176,16 @@ const getUsers = asyncHandler(async (req, res) => {
 
   res.json(users);
 });
+const getRoles = asyncHandler(async (req, res) => {
+  const roles = await Role.find();
+
+  if (!roles) {
+    res.send({ message: 'No roles can be found.' });
+    return;
+  }
+
+  res.json(roles);
+});
 
 module.exports = {
   registerUser,
@@ -154,4 +194,6 @@ module.exports = {
   getUsers,
   deleteUser,
   logoutUser,
+  getRoles,
+  updateUser,
 };
