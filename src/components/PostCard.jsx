@@ -38,7 +38,7 @@ function PostCard({ post }) {
         </Box>
 
         <Box>
-          {post.description}
+          {post.content}
           <Box as="span" color="gray.600" fontSize="sm"></Box>
         </Box>
 
