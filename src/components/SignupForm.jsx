@@ -1,26 +1,25 @@
 import {
   FormControl,
   FormLabel,
+  Text,
   Flex,
   Box,
-  Input,
   VStack,
+  Input,
   Button,
-  Text,
+  useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
-import { login } from "../features/login-auth/loginauth";
+import { register } from "../features/login-auth/loginauth";
 
-
-function LoginForm() {
+function SignupForm() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const toast = useToast();
-
   let navigate = useNavigate();
 
   const {
@@ -32,14 +31,15 @@ function LoginForm() {
     setErrorMessage("");
 
     try {
-      const user = await login(email, password);
-      
+      const user = await register(username, email, password);
+
+      setUsername("");
       setEmail("");
       setPassword("");
 
       toast({
-        title: "Login successful!",
-        description: "Redirecting to your profile...",
+        title: "Signup successful!",
+        description: "Redirecting to your new profile...",
         status: "success",
         duration: 4000,
         isClosable: true,
@@ -64,6 +64,16 @@ function LoginForm() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <VStack>
             <FormControl>
+              <FormLabel htmlFor="username">Username</FormLabel>
+              <Input
+                id="username"
+                type="text"
+                variant="filled"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              ></Input>
+
               <FormLabel htmlFor="email">Email Address</FormLabel>
               <Input
                 id="email"
@@ -85,7 +95,7 @@ function LoginForm() {
               ></Input>
             </FormControl>
             <Button type="submit" colorScheme="purple" isFullWidth>
-              Log in
+              Signup
             </Button>
           </VStack>
         </form>
@@ -94,4 +104,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default SignupForm;

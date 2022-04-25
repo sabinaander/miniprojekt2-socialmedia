@@ -16,19 +16,22 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Text,
+  color
 } from "@chakra-ui/react";
 
 import { Link } from "react-router-dom";
 import { SearchIcon } from "@chakra-ui/icons";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 
 function Header() {
   const loginModal = useDisclosure();
   const signupModal = useDisclosure();
 
   return (
-    <Container maxW="100%" border="1px" padding={2} borderColor="gray.200">
+    <Container maxW="100%" borderBottom="1px" padding={2} borderColor="gray.200">
       <Flex>
         <Center gap={10}>
           <Link to="/">
@@ -77,21 +80,22 @@ function Header() {
                     <LoginForm />
                   </ModalBody>
                   <ModalFooter gap="1rem">
-                    <Button
+                  <Text
+                    cursor="pointer"
                       onClick={() => {
                         loginModal.onClose();
                         signupModal.onOpen();
                       }}
                     >
-                      Sign up
-                    </Button>
+                      Signup
+                    </Text>
                     <Button onClick={loginModal.onClose}>Cancel</Button>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
             </Button>
 
-            {/* SIGN UP MODAL */}
+            {/* SIGNUP MODAL */}
             <Button
               as="button"
               borderRadius="md"
@@ -102,7 +106,7 @@ function Header() {
               h={8}
               display={{ base: "none", md: "block" }}
             >
-              Sign up
+              Signup
               <Modal
                 closeOnOverlayClick={false}
                 isOpen={signupModal.isOpen}
@@ -113,17 +117,18 @@ function Header() {
                   <ModalHeader>Sign up</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody pb={6}>
-                    <LoginForm />
+                    <SignupForm/>
                   </ModalBody>
                   <ModalFooter gap="1rem">
-                    <Button
+                    <Text
+                    cursor="pointer"
                       onClick={() => {
                         signupModal.onClose();
                         loginModal.onOpen();
                       }}
                     >
                       Log in
-                    </Button>
+                    </Text>
                     <Button onClick={signupModal.onClose}>Cancel</Button>
                   </ModalFooter>
                 </ModalContent>

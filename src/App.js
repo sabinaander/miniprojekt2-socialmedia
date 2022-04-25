@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage';
+import ProfileSettingsPage from './pages/ProfileSettingsPage';
 
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
       </Route>
-      <Route path="profile" element={<ProfilePage />} />
+      <Route path="profile/:username" element={<ProfilePage />} />
+      <Route path="/settings" element={<ProfileSettingsPage />} />
       <Route path="admin" element={<AdminPage />} />
     </Routes>
    
