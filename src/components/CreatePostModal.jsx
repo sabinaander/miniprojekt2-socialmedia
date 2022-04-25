@@ -16,6 +16,7 @@ import PostForm from "../components/PostForm";
 
 function CreatePostModal() {
   const currentUser = JSON.parse(localStorage.getItem("user"));
+  
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Center padding="0.5rem" gap={{base:"0.5rem", lg: "2rem"}} w="100%" mb={3}>
