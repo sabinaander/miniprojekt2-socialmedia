@@ -11,8 +11,9 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { addNewPost } from '../features/blogPosts/postsSlice'
+import { useNavigate } from 'react-router-dom'
 
-function PostForm() {
+function PostForm({ onClose }) {
   const {
     handleSubmit,
     register,
@@ -20,7 +21,11 @@ function PostForm() {
     formState: { isSubmitting },
   } = useForm()
 
+  const navigate = useNavigate()
+
   const dispatch = useDispatch()
+
+  const user = JSON.parse(localStorage.getItem('user'))
 
   const onSubmit = (data) => {
     if (data) {
@@ -29,8 +34,11 @@ function PostForm() {
           title: data.title,
           content: data.content,
           imageUrl: data.imageUrl,
+          author: user.username,
         })
       )
+      onClose()
+      navigate('/')
     }
     // reset(data) // - not working, needs investigating
   }

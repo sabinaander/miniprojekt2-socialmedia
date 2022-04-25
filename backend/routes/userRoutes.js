@@ -15,9 +15,10 @@ router.post('/', registerUser);
 router.post('/login', loginUser);
 router.delete('/logout', logoutUser);
 router.get('/roles', getRoles);
-router.get('/:id', getUser);
-router.put('/:id', updateUser);
+router.get('/:username', getUser);
+router.put('/:username', updateUser);
 router.get('/', getUsers);
-router.delete('/:id', deleteUser);
+router.delete('/:username', deleteUser);
+
 
 module.exports = router;

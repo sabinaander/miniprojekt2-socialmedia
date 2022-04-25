@@ -8,7 +8,6 @@ const register = async (username, email, password) => {
 
     localStorage.setItem('user', JSON.stringify(response.data))
     return response.data
-
 }
 
 const login = async (email, password) => {
@@ -18,6 +17,13 @@ const login = async (email, password) => {
         }, { withCredentials: true })
 
     localStorage.setItem('user', JSON.stringify(response.data))
+    return response.data
+}
+
+// get users
+const getUser = async (username) => {
+    const response = await axios
+    .get(API_URL + `/${username}`)
     return response.data
 }
 
@@ -32,5 +38,5 @@ const logout = async () => {
     return response
 }
 
-export default { register, login, logout }
+export default { register, login, logout, getUser }
 
