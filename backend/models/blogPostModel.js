@@ -1,12 +1,23 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const blogPostSchema = mongoose.Schema(
-    
+const blogPostSchema = new mongoose.Schema(
   {
-    text: {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      // required: true,
+      ref: 'User',
+    },
+    title: {
       type: String,
-      required: [true, 'Please add something']
-    }
+      required: [true, 'Please add something'],
+    },
+    content: {
+      type: String,
+      required: [true, 'Please add something'],
+    },
+    author: String,
+    likes: Number,
+    imageUrl: String,
   },
   {
     timestamps: true,
