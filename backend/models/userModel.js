@@ -1,39 +1,29 @@
-// defines the user 
+// defines the user
 const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema(
-    {
-        username: {
-            type: String,
-            required: [true, 'Please add a name'],
-          },
-        email: {
-        type: String,
-        required: [true, 'Please add an email'],
-        unique: true,
-      },
-      password: {
-        type: String,
-        required: [true, 'Please add a password'],
-      },
+  {
+    username: {
+      type: String,
+      required: [true, 'Please add a name'],
     },
-    {
-      timestamps: true,
-    }
-  )
-  
-  module.exports = mongoose.model('User', userSchema)
-// const User = mongoose.model(
-//     'User',
-//     new mongoose.Schema({
-//         email: String,
-//         password: String,
-//         roles: [{
-//             type: mongoose.Schema.Types.ObjectId,
-//             ref: "role"
-//         }
-//         ]
-//     })
-// )
+    email: {
+      type: String,
+      required: [true, 'Please add an email'],
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: [true, 'Please add a password'],
+    },
+    role: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'role',
+    },
+  },
+  {
+    timestamps: true,
+  }
+)
 
-// module.exports = User
+module.exports = mongoose.model('User', userSchema)

@@ -1,10 +1,25 @@
 GET http://localhost:5000/api/blogPosts
 
 ###
+GET http://localhost:5000/api/blogPosts/62629198f149d34fff08fc2c
+
+###
 POST http://localhost:5000/api/blogPosts
+Content-Type: application/json
+
+{
+  "title": "post 1",
+  "content": "mytext"
+}
 
 ###
-PUT http://localhost:5000/api/blogPosts/4534
+PUT http://localhost:5000/api/blogPosts/62629198f149d34fff08fc2c
+Content-Type: application/json
+
+{
+  "title": "post 1",
+  "content": "my updated text"
+}
 
 ###
-DELETE http://localhost:5000/api/blogPosts/4353
+DELETE http://localhost:5000/api/blogPosts/6262736bb83b1c45f592e06e
