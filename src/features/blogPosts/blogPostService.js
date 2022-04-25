@@ -24,7 +24,9 @@ const deleteBlog = async (blogId) => {
 }
 
 const blogService = {
-  createBlog
+  createBlog,
+  getBlog,
+  deleteBlog,
 }
 
 export default blogService
