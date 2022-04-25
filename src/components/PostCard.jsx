@@ -23,7 +23,7 @@ function PostCard({ post }) {
             textTransform="uppercase"
             ml="2"
           >
-            {post.author} &bull; {post.createdAt}
+            {post.author} &bull; {new Date(post.createdAt).toDateString()}
           </Box>
         </Box>
 
