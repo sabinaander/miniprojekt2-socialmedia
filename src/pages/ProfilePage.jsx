@@ -32,17 +32,7 @@ function ProfilePage() {
           Posts by
           {user.username}
         </Text>
-        <Grid
-          templateColumns={{
-            base: "1fr",
-            md: "repeat(2, 1fr)",
-            lg: "repeat(3, 1fr)",
-          }}
-          gap={6}
-          mt={5}
-        >
           <PostsList />
-        </Grid>
       </Container>
     )
   );
