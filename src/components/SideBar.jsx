@@ -9,6 +9,9 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { SettingsIcon } from "@chakra-ui/icons";
 
 function SideBar() {
+
+  const currentUser = JSON.parse(localStorage.getItem('user')) 
+
   return (
     <Container maxW="20vw" mt={10}>
       <Flex direction="column">
@@ -33,7 +36,7 @@ function SideBar() {
           </Flex>
         </Link>
 
-        <Link to="/profile/:username">
+        <Link to={`/profile/${currentUser.username}`}>
           <Flex gap="2rem" mb={5}>
             <PersonOutlineIcon fontSize="medium" color="action" />
             <Text fontSize="lg" display={{base:"none", md:"block"}}>Profile</Text>

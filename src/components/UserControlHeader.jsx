@@ -1,5 +1,5 @@
-import { Flex, Container, Spacer, Box, Button } from "@chakra-ui/react";
-
+import { Flex, Container, Spacer, Button } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import HomeIcon from "@mui/icons-material/Home";
@@ -7,7 +7,9 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { logout } from "../features/login-auth/loginauth";
 import { SettingsIcon } from "@chakra-ui/icons";
 
-function ControlHeader() {
+function UserControlHeader() {
+  // const currentUser = JSON.parse(localStorage.getItem('user')) 
+  
   return (
     <Container maxW="100%" padding={2} textAlign="center">
       <Flex>
@@ -31,7 +33,7 @@ function ControlHeader() {
                 px={4}
                 h={7}
                 _hover={{
-                  background: "gray.600"
+                  background: "gray.600",
                 }}
               >
                 Log Out
@@ -44,4 +46,4 @@ function ControlHeader() {
   );
 }
 
-export default ControlHeader;
+export default UserControlHeader;

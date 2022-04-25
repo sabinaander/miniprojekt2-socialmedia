@@ -5,25 +5,27 @@ import {
   Container,
   Spacer,
 } from "@chakra-ui/react";
+import loginauthservice from "../features/login-auth/loginauthservice";
 
 function ProfileHeader() {
+  const user = loginauthservice.getUser();
   return (
     <Container maxW="100%" padding={0}>
       <Container
         maxW="100%"
         height="30vh"
         padding={2}
-        backgroundImage="url(https://images-1.wuaki.tv/system/shots/196372/original/snapshot-1590665218.jpeg)"
+        backgroundImage={user.backgroundImage}
       >
         <Avatar
           size="xl"
-          name="America, fuck yeaa!"
-          src="https://static.feber.se/article_images/50/72/03/507203_1280.jpg"
+          name={user.username}
+          src={user.avatar}
         />
         <Flex>
-          {/* username */}
+          
           <Heading as="h1" size="2xl" color="white">
-            Capt'n
+            {user.username}
           </Heading>
 
           <Spacer />
