@@ -102,11 +102,11 @@ const logoutUser = asyncHandler(async (req, res) => {
 })
 
 
-// Get user by id
+// Get user by username
 const getUser = asyncHandler(async (req, res) => {
-  const id = req.params.id
+  const username = req.params.username
 
-  const user = await User.findById(id)
+  const user = await User.findOne({username : username}).exec()
 
   if (!user) {
     res.status(400)
@@ -117,11 +117,11 @@ const getUser = asyncHandler(async (req, res) => {
   res.json(user)
 })
 
-// delete user by id
+// delete user by username
 const deleteUser = asyncHandler(async (req, res) => {
-  const id = req.params.id
+  const username = req.params.username
 
-  const user = await User.findById(id)
+  const user = await User.findOne({username : username}).exec()
 
   if (!user) {
     res.status(400)
@@ -129,7 +129,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     return
   }
 
-  await User.findByIdAndDelete(id)
+  await User.findByIdAndDelete(user._id)
   res.send({ message: 'user has been deleted.' })
 })
 

@@ -17,11 +17,22 @@ import {
   Heading,
   Spacer,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { useStore } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserControlHeader from "../components/UserControlHeader";
+import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
 
 function ProfileSettingsPage() {
-  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const store = useStore(loginauthreducer);
+  const state = store.getState();
+  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
+  const [user, setUser] = useState(state.auth.user);
+
+  store.subscribe(() => {
+    setIsLoggedIn(store.getState().auth.isLoggedIn);
+    setUser(store.getState().auth.user);
+  });
 
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -53,7 +64,7 @@ function ProfileSettingsPage() {
           <Flex>
             <Text fontSize="2xl">Email</Text>
             <Spacer />
-            <Text>{currentUser.email}</Text>
+            <Text>{user.email}</Text>
             <EditIcon ml={5} w={6} h={6} onClick={{}}>
             </EditIcon>
           </Flex>
@@ -63,7 +74,7 @@ function ProfileSettingsPage() {
           <Flex>
             <Text fontSize="2xl">Username</Text>
             <Spacer />
-            <Text>{currentUser.username}</Text>
+            <Text>{user.username}</Text>
             <EditIcon ml={5} w={6} h={6} onClick={{}}></EditIcon>
           </Flex>
 
@@ -72,7 +83,7 @@ function ProfileSettingsPage() {
           <Flex>
             <Text fontSize="2xl">Password</Text>
             <Spacer />
-            <Text>{currentUser.password}</Text>
+            <Text>{user.password}</Text>
             <EditIcon ml={5} w={6} h={6} onClick={{}}></EditIcon>
           </Flex>
 

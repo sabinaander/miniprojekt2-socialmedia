@@ -5,27 +5,27 @@ import {
   Container,
   Spacer,
 } from "@chakra-ui/react";
-import loginauthservice from "../features/login-auth/loginauthservice";
 
-function ProfileHeader() {
-  const user = loginauthservice.getUser();
+function ProfileHeader(props) {
+
   return (
+    props.user &&
     <Container maxW="100%" padding={0}>
       <Container
         maxW="100%"
         height="30vh"
         padding={2}
-        backgroundImage={user.backgroundImage}
+        backgroundImage={props.user.backgroundImage}
       >
         <Avatar
           size="xl"
-          name={user.username}
-          src={user.avatar}
+          name={props.user.username}
+          src={props.user.avatar}
         />
         <Flex>
           
           <Heading as="h1" size="2xl" color="white">
-            {user.username}
+            {props.user.username}
           </Heading>
 
           <Spacer />

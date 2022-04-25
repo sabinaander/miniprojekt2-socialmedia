@@ -1,16 +1,24 @@
-import { Flex, Container, Text } from "@chakra-ui/react";
-
+import { Flex, Container, Text, useRadio } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-
 import HomeIcon from "@mui/icons-material/Home";
 import TagIcon from "@mui/icons-material/Tag";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { SettingsIcon } from "@chakra-ui/icons";
+import { useStore } from "react-redux";
+import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
+import { useState } from "react";
 
 function SideBar() {
+  const store = useStore(loginauthreducer);
+  const state = store.getState();
+  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
+  const [user, setUser] = useState(state.auth.user);
 
-  const currentUser = JSON.parse(localStorage.getItem('user')) 
+  store.subscribe(() => {
+    setIsLoggedIn(store.getState().auth.isLoggedIn);
+    setUser(store.getState().auth.user);
+  });
 
   return (
     <Container maxW="20vw" mt={10}>
@@ -18,34 +26,44 @@ function SideBar() {
         <Link to="/">
           <Flex gap="2rem" mb={5}>
             <HomeIcon fontSize="medium" color="action" />
-            <Text fontSize="lg" display={{base:"none", md:"block"}}>Home</Text>
+            <Text fontSize="lg" display={{ base: "none", md: "block" }}>
+              Home
+            </Text>
           </Flex>
         </Link>
 
         <Link to="/explore">
           <Flex gap="2rem" mb={5}>
             <TagIcon fontSize="medium" color="action" />
-            <Text fontSize="lg" display={{base:"none", md:"block"}}>Explore</Text>
+            <Text fontSize="lg" display={{ base: "none", md: "block" }}>
+              Explore
+            </Text>
           </Flex>
         </Link>
 
         <Link to="/notifications">
           <Flex gap="2rem" mb={5}>
             <NotificationsNoneIcon fontSize="medium" color="action" />
-            <Text fontSize="lg" display={{base:"none", md:"block"}}>Notifications</Text>
+            <Text fontSize="lg" display={{ base: "none", md: "block" }}>
+              Notifications
+            </Text>
           </Flex>
         </Link>
 
-        <Link to={`/profile/${currentUser.username}`}>
+        <Link to={`/profile/${user.username}`}>
           <Flex gap="2rem" mb={5}>
             <PersonOutlineIcon fontSize="medium" color="action" />
-            <Text fontSize="lg" display={{base:"none", md:"block"}}>Profile</Text>
+            <Text fontSize="lg" display={{ base: "none", md: "block" }}>
+              Profile
+            </Text>
           </Flex>
         </Link>
         <Link to="/settings">
           <Flex gap="2rem" mb={5}>
             <SettingsIcon fontSize="medium" color="action" />
-            <Text fontSize="lg" display={{base:"none", md:"block"}}>Settings</Text>
+            <Text fontSize="lg" display={{ base: "none", md: "block" }}>
+              Settings
+            </Text>
           </Flex>
         </Link>
       </Flex>

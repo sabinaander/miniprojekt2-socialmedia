@@ -25,9 +25,20 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 import { logout } from "../features/login-auth/loginauth";
+import { useStore } from "react-redux";
+import { useState } from "react";
+import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
 
 function Header() {
-  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const store = useStore(loginauthreducer);
+  const state = store.getState();
+  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
+  const [user, setUser] = useState(state.auth.user);
+
+  store.subscribe(() => {
+    setIsLoggedIn(store.getState().auth.isLoggedIn);
+    setUser(store.getState().auth.user);
+  });
 
   const loginModal = useDisclosure();
   const signupModal = useDisclosure();
@@ -67,11 +78,11 @@ function Header() {
             </Button>
 
             {/* USER IS LOGGED IN */}
-            {currentUser ? (
+            {isLoggedIn ? (
               <>
                 <Center>
                   <Text fontSize="lg" mr={2}>welcome in </Text>
-                  <Text fontSize="lg" fontWeight="bold">{currentUser.username}</Text>
+                  <Text fontSize="lg" fontWeight="bold">{user.username}</Text>
                 </Center>
                 <Button
                   onClick={logout}
