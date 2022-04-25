@@ -1,14 +1,38 @@
-import { useForm } from "react-hook-form";
-import { Input, Stack, Button,Textarea, FormControl, Flex, Box, VStack } from "@chakra-ui/react";
+import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import {
+  Input,
+  Stack,
+  Button,
+  Textarea,
+  FormControl,
+  Flex,
+  Box,
+  VStack,
+} from '@chakra-ui/react'
+import { addNewPost } from '../features/blogPosts/postsSlice'
 
 function PostForm() {
   const {
     handleSubmit,
+    register,
+    // reset,
     formState: { isSubmitting },
-  } = useForm();
+  } = useForm()
 
-  function onSubmit() {
-    // hurr hurr
+  const dispatch = useDispatch()
+
+  const onSubmit = (data) => {
+    if (data) {
+      dispatch(
+        addNewPost({
+          title: data.title,
+          content: data.content,
+          imageUrl: data.imageUrl,
+        })
+      )
+    }
+    // reset(data) // - not working, needs investigating
   }
 
   return (
@@ -20,11 +44,23 @@ function PostForm() {
               <Stack>
                 <Input
                   id="title"
+                  placeholder="image url"
+                  type="text"
+                  size="lg"
+                  variant="filled"
+                  errorBorderColor="red.300"
+                  {...register('imageUrl')}
+                />
+                <Input
+                  id="title"
                   placeholder="Title"
                   type="text"
                   size="lg"
-                  variant="filled"   
+                  variant="filled"
                   errorBorderColor="red.300"
+                  {...register('title', {
+                    required: 'This is required',
+                  })}
                 />
                 <Textarea
                   id="content"
@@ -32,6 +68,9 @@ function PostForm() {
                   type="text"
                   variant="filled"
                   errorBorderColor="red.300"
+                  {...register('content', {
+                    required: 'This is required',
+                  })}
                 />
               </Stack>
             </FormControl>
@@ -47,7 +86,7 @@ function PostForm() {
         </form>
       </Box>
     </Flex>
-  );
+  )
 }
 
-export default PostForm;
+export default PostForm
