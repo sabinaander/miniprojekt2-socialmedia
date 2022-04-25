@@ -1,38 +1,46 @@
 import { Flex, Text, Container, Spacer, Center } from "@chakra-ui/react";
 
-import { Link } from "react-router-dom";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import loginauthservice from "../features/login-auth/loginauthservice";
 
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import TwitterIcon from '@mui/icons-material/Twitter';
-
-function ProfileBio() {
+function ProfileBio(props) {
+  const user = props.user;
   return (
-    <Container maxW="60%" padding={2} borderColor="gray.200">
-        <Text align="center" fontWeight="bold" mb={5}>About Capt'n</Text>
+    user && (
+      <Container maxW="60%" padding={2} borderColor="gray.200">
+        <Text align="center" fontWeight="bold" mb={5}>
+          About {user.username}
+        </Text>
         <Text align="center" mb={5}>
-        A simple man from the avengers. 100% the best of them, Hulk sucks.
-        Ususally posts pictures with my cats, food and my momma.
-      </Text>
-      <Spacer />
-      {/* All social media links on profile */}
-      <Text align="center" fontWeight="bold" mb={5} >Also follow me on</Text>
-      <Center>
-        <Flex gap={6}>
-          <Link to="/">
+          {user.bio}
+        </Text>
+        <Spacer />
+
+        {/* All social media links on profile */}
+        <Text align="center" fontWeight="bold" mb={5}>
+          Also follow me on
+        </Text>
+        <Center>
+          <Flex gap={6}>
             <Flex gap="2rem" mb={5}>
-              <FacebookIcon fontSize="medium" color="action" />
-              <Link to="/notifications">
+              <a href={`${user.facebook}`}>
+                <FacebookIcon fontSize="medium" color="action" />
+              </a>
+              <a href={`${user.instagram}`}>
                 <InstagramIcon fontSize="medium" color="action" />
-              </Link>
-              <Link to="/settings">
+              </a>
+              <a href={`${user.twitter}`}>
                 <TwitterIcon fontSize="medium" color="action" />
-              </Link>
+              </a>
             </Flex>
-          </Link>
-        </Flex>
-      </Center>
-    </Container>
+          </Flex>
+        </Center>
+      </Container>
+    )
   );
 }
 

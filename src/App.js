@@ -6,7 +6,7 @@ import SignupPage from './pages/SignupPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage';
 import ProfileSettingsPage from './pages/ProfileSettingsPage';
-
+import userservice from './features/login-auth/userservice';
 
 function App() {
   return (
@@ -20,7 +20,6 @@ function App() {
       <Route path="/settings" element={<ProfileSettingsPage />} />
       <Route path="admin" element={<AdminPage />} />
     </Routes>
-   
   );
 }
 

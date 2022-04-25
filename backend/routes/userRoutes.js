@@ -5,8 +5,8 @@ const { registerUser, loginUser, getUser, getUsers, deleteUser, logoutUser } = r
 router.post('/', registerUser)
 router.post('/login', loginUser)
 router.delete('/logout', logoutUser)
-router.get('/:id', getUser)
+router.get('/:username', getUser)
 router.get('/', getUsers)
-router.delete('/:id', deleteUser)
+router.delete('/:username', deleteUser)
 
 module.exports = router

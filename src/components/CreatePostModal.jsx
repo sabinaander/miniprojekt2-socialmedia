@@ -11,22 +11,32 @@ import {
   Center,
 } from '@chakra-ui/react'
 
-import { useDisclosure } from '@chakra-ui/react'
-import PostForm from '../components/PostForm'
+
+import { useDisclosure } from "@chakra-ui/react";
+import {  useState } from "react";
+import { useStore } from "react-redux";
+import PostForm from "../components/PostForm";
+import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
 
 function CreatePostModal() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const store = useStore(loginauthreducer);
+  const state = store.getState();
+  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
+  const [user, setUser] = useState(state.auth.user);
+
+  store.subscribe(() => {
+    setIsLoggedIn(store.getState().auth.isLoggedIn);
+    setUser(store.getState().auth.user);
+  });
+  
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Center
-      padding="0.5rem"
-      gap={{ base: '0.5rem', lg: '2rem' }}
-      w="100%"
-      mb={3}
-    >
+    user &&
+    <Center padding="0.5rem" gap={{base:"0.5rem", lg: "2rem"}} w="100%" mb={3}>
       <Avatar
         size="xl"
-        name="America, fuck yeaa!"
-        src="https://static.feber.se/article_images/50/72/03/507203_1280.jpg"
+        name={user.username}
+        src={user.avatar}
       />
       <Button
         onClick={onOpen}
