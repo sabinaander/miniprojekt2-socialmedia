@@ -30,7 +30,7 @@ function AdminUserDetails(props) {
           rightIcon={<SaveIcon />}
           onClick={() => {
             axios
-              .put('http://localhost:5000/api/users/' + props.user._id, {
+              .put('http://localhost:5000/api/users/' + props.user.username, {
                 role: userRole._id,
               })
               .then((res) => console.log('role saved'));
