@@ -167,7 +167,7 @@ const updateUser = asyncHandler(async (req, res) => {
   user.username = req.body.username;
   if (req.body.password) {
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt)
+    const hashedPassword = await bcrypt.hash(req.body.password, salt)
     user.password = hashedPassword
   }
   user.website = req.body.website;
