@@ -38,7 +38,7 @@ function PostForm({ onClose }) {
   const toast = useToast()
 
   const onSubmit = (data) => {
-    if (data) {
+    if (data && isLoggedIn) {
       dispatch(
         addNewPost({
           title: data.title,

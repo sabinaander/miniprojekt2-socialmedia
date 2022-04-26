@@ -1,26 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import {
-  fetchPosts,
   getPostsError,
   getPostsStatus,
   selectAllPosts,
 } from '../features/blogPosts/postsSlice'
 import { Grid, Spinner } from '@chakra-ui/react'
-import { useEffect } from 'react'
 import PostCard from './PostCard'
 
 function PostsList({ author }) {
-  const dispatch = useDispatch()
-
   const posts = useSelector(selectAllPosts)
   const postStatus = useSelector(getPostsStatus)
   const error = useSelector(getPostsError)
-
-  useEffect(() => {
-    if (postStatus === 'idle') {
-      dispatch(fetchPosts())
-    }
-  }, [postStatus, dispatch])
 
   let content
   if (postStatus === 'loading') {
