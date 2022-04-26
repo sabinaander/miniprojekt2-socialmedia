@@ -1,9 +1,10 @@
 import {
-    REGISTER_SUCCESS,
+    UPDATE_SUCCESS,
     REGISTER_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
+    DELETE_SUCCESS
 
 } from '../logintype'
 
@@ -34,6 +35,18 @@ export default function (state = initialState, action) {
                 isLoggedIn: false,
                 user: null
             }
+        case UPDATE_SUCCESS:
+            return{
+                ...state,
+                isLoggedIn: true,
+                user: payload.user
+            }
+        case DELETE_SUCCESS:
+            return{
+                ...state,
+                isLoggedIn: false,
+                user: null
+            }    
         case LOGOUT:
             return {
                 ...state,

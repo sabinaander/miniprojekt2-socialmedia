@@ -16,18 +16,30 @@ import {
   Flex,
   Heading,
   Spacer,
+  toast,
+  useToast,
+  FormControl,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { update } from "../features/login-auth/loginauth";
 import UserControlHeader from "../components/UserControlHeader";
 import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
+import { useForm } from "react-hook-form";
 
 function ProfileSettingsPage() {
   const store = useStore(loginauthreducer);
   const state = store.getState();
+
+  const editMode = useState(false);
+
   const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
   const [user, setUser] = useState(state.auth.user);
+  const toast = useToast();
+  const [errorMessage, setErrorMessage] = useState("");
 
   store.subscribe(() => {
     setIsLoggedIn(store.getState().auth.isLoggedIn);
@@ -37,22 +49,52 @@ function ProfileSettingsPage() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const updateEmail = () => {
-    // update db and localstorage
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm();
+
+  const onSubmit = async (e) => {
+    setErrorMessage("");
+    try {
+      const updateUser = await update();
+      toast({
+        title: "Edit successful!",
+        description: "",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    } catch (e) {
+      setErrorMessage(e.response.data.message);
+      return;
+    }
   };
 
-  const updateUsername = () => {
-    // update db and localstorage
-  };
+  // useEffect(() => {
+  //   async function updateUsername() {
+  //     await updateUser(username);
+  //   }
+  // });
 
-  const updatePassword = () => {
-    // update db and localstorage
-  };
+  // useEffect(() => {
+  //   async function updateEmail() {
+  //     await updateUser(email);
+  //   }
+  // });
 
-  const deleteAccount = () => {
-    // remove from db
-    navigate(`/`);
-  };
+  // useEffect(() => {
+  //   async function updatePassword() {
+  //     await updateUser(password);
+  //   }
+  // });
+
+  useEffect(() => {
+    const deleteAccount = async ()=> {
+      await store.deleteUser();
+      navigate(`/`);
+    }
+  },[]);
 
   return (
     <Container bg="gray.100" maxW="container.xl">
@@ -65,8 +107,7 @@ function ProfileSettingsPage() {
             <Text fontSize="2xl">Email</Text>
             <Spacer />
             <Text>{user.email}</Text>
-            <EditIcon ml={5} w={6} h={6} onClick={{}}>
-            </EditIcon>
+            <EditIcon ml={5} w={6} h={6} onClick={{}}></EditIcon>
           </Flex>
 
           <Divider border="2px" mt={6} mb={6} />
@@ -75,7 +116,27 @@ function ProfileSettingsPage() {
             <Text fontSize="2xl">Username</Text>
             <Spacer />
             <Text>{user.username}</Text>
-            <EditIcon ml={5} w={6} h={6} onClick={{}}></EditIcon>
+            <EditIcon ml={5} w={6} h={6} onClick={{ editMode }}></EditIcon>
+            {editMode && (
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <FormControl>
+                  <FormLabel htmlFor="username">Edit Username</FormLabel>
+                  <Input
+                    id="username"
+                    type="username"
+                    variant="filled"
+                    required
+                    value={user.username}
+                    // onChange={(e) => updateUser(e.target.value)}
+                  >
+                    {user.username}
+                  </Input>
+                </FormControl>
+                <Button type="submit" colorScheme="purple" isFullWidth>
+                  Save edit
+                </Button>
+              </form>
+            )}
           </Flex>
 
           <Divider border="2px" mt={6} mb={6} />

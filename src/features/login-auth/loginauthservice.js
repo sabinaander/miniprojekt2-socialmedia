@@ -23,9 +23,31 @@ const login = async (email, password) => {
 // get users
 const getUser = async (username) => {
     const response = await axios
-    .get(API_URL + `/${username}`)
+        .get(API_URL + `/${username}`)
     return response.data
 }
+
+const updateUser = async () => {
+    const response = await axios
+        .post(API_URL + "update", {
+        }, { withCredentials: true })
+
+    localStorage.setItem('user', JSON.stringify(response.data))
+    return response.data
+}
+
+const deleteUser = async () => {
+    const response = await axios
+        .delete(API_URL + "delete", {
+        }, { withCredentials: true })
+
+    if (response.status === 200) {
+        localStorage.removeItem('user')
+    }
+
+    return response.data
+}
+
 
 const logout = async () => {
     const response = await axios
@@ -38,5 +60,5 @@ const logout = async () => {
     return response
 }
 
-export default { register, login, logout, getUser }
+export default { register, login, logout, getUser, updateUser, deleteUser }
 

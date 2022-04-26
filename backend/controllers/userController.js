@@ -139,10 +139,10 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 // update user, right now you can only update a users role
 const updateUser = asyncHandler(async (req, res) => {
-  const id = req.params.id;
+  const username = req.params.username
   const roleId = req.body.role;
 
-  const user = await User.findById(id);
+  const user = await User.findOne({username : username}).exec()
   if (!user) {
     res.status(400);
     res.send({ message: 'This user does not exist.' });
@@ -150,6 +150,7 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   const role = await Role.findById(roleId);
+
   if (!role) {
     res.status(400);
     res.send({ message: 'The specified role does not exist.' });
@@ -157,9 +158,21 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   user.role = role;
+  user.bio = bio;
+  user.avatar = avatar;
+  user.backgroundimage = backgroundimage;
+  user.email = email;
+  user.username = username;
+  user.password = password;
+  user.website = website;
+  user.website.facebook = website.facebook;
+  user.website.instagram = website.instagram;
+  user.website.linkedin = website.linkedin;
+  user.website.twitter = website.twitter;
+
   user.save();
 
-  res.send({ message: 'user has been deleted.' });
+  res.send({ message: 'user has been updated.' });
 });
 
 // Get all users
