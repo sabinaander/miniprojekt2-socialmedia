@@ -16,6 +16,15 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, 'Please add a password'],
     },
+    bio: String,
+    backgroundimage: String,
+    avatar: String,
+    website: {
+      facebook: String,
+      instagram: String,
+      twitter: String,
+      linkedin: String,
+    },
     role: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Role',
