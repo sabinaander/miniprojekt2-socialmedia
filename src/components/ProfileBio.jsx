@@ -3,9 +3,7 @@ import { Flex, Text, Container, Spacer, Center } from "@chakra-ui/react";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import loginauthservice from "../features/login-auth/loginauthservice";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 function ProfileBio(props) {
   const user = props.user;
@@ -27,15 +25,30 @@ function ProfileBio(props) {
         <Center>
           <Flex gap={6}>
             <Flex gap="2rem" mb={5}>
-              <a href={`${user.facebook}`}>
-                <FacebookIcon fontSize="medium" color="action" />
-              </a>
-              <a href={`${user.instagram}`}>
-                <InstagramIcon fontSize="medium" color="action" />
-              </a>
-              <a href={`${user.twitter}`}>
-                <TwitterIcon fontSize="medium" color="action" />
-              </a>
+              {user.website && (
+                <>
+                  {user.website.facebook && (
+                    <a href={`${user.website.facebook}`}>
+                      <FacebookIcon fontSize="medium" color="action" />
+                    </a>
+                  )}
+                  {user.website.instagram && (
+                    <a href={`${user.website.instagram}`}>
+                      <InstagramIcon fontSize="medium" color="action" />
+                    </a>
+                  )}
+                  {user.website.twitter && (
+                    <a href={`${user.website.twitter}`}>
+                      <TwitterIcon fontSize="medium" color="action" />
+                    </a>
+                  )}
+                  {user.website.linkedin && (
+                    <a href={`${user.website.linkedin}`}>
+                      <LinkedInIcon fontSize="medium" color="action" />
+                    </a>
+                  )}
+                </>
+              )}
             </Flex>
           </Flex>
         </Center>
