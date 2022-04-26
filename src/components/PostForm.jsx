@@ -10,6 +10,7 @@ import {
   Flex,
   Box,
   VStack,
+  useToast,
 } from '@chakra-ui/react'
 import { addNewPost } from '../features/blogPosts/postsSlice'
 import { useNavigate } from 'react-router-dom'
@@ -34,6 +35,7 @@ function PostForm({ onClose }) {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const toast = useToast()
 
   const onSubmit = (data) => {
     if (data) {
@@ -46,6 +48,12 @@ function PostForm({ onClose }) {
         })
       )
       onClose()
+      toast({
+        title: 'Submitted!',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
       navigate('/')
     }
     // reset(data) // - not working, needs investigating
