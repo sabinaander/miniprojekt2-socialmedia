@@ -67,6 +67,7 @@ function ProfileSettingsPage() {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { isSubmitting },
   } = useForm();
 
@@ -83,6 +84,10 @@ function ProfileSettingsPage() {
         duration: 4000,
         isClosable: true,
       });
+      setValue("password", "")
+      setEditModeEmail(false)
+      setEditModePassword(false)
+      setEditModeUsername(false)
     } catch (e) {
       console.log(e);
       setErrorMessage(e.response.data.message);
