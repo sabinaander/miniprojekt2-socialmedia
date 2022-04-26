@@ -41,8 +41,8 @@ export const update = async(username, newUserData) => {
     return user; 
 }
 
-export const deleteuser = async() => {
-  const user = await loginauthservice.deleteUser()
+export const deleteuser = async(username) => {
+  const user = await loginauthservice.deleteUser(username)
 
   store.dispatch({
     type: DELETE_SUCCESS,

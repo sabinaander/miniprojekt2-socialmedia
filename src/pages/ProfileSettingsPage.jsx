@@ -264,7 +264,7 @@ function ProfileSettingsPage() {
                 <ModalBody>Are you sure? This can't be reversed.</ModalBody>
 
                 <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={deleteuser}>
+                  <Button colorScheme="blue" mr={3} onClick={() => deleteuser(user.username)}>
                     DELETE
                   </Button>
                   <Button variant="ghost" onClick={onClose}>

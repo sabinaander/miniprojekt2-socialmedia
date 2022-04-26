@@ -36,9 +36,9 @@ const updateUser = async (username, newUserData) => {
     return response.data
 }
 
-const deleteUser = async () => {
+const deleteUser = async (username) => {
     const response = await axios
-        .delete(API_URL + "delete", {
+        .delete(API_URL + `${username}`, {
         }, { withCredentials: true })
 
     if (response.status === 200) {
