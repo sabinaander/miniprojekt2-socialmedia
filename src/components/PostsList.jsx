@@ -9,7 +9,7 @@ import { Grid, Spinner } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import PostCard from './PostCard'
 
-function PostsList() {
+function PostsList({ author }) {
   const dispatch = useDispatch()
 
   const posts = useSelector(selectAllPosts)
@@ -34,7 +34,10 @@ function PostsList() {
       />
     )
   } else if (postStatus === 'succeeded') {
-    const orderedPosts = posts
+    const filteredPosts = author
+      ? posts.filter((post) => post.author === author)
+      : posts
+    const orderedPosts = filteredPosts
       .slice()
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
     content = orderedPosts.map((post) => (
