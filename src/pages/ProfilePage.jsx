@@ -1,24 +1,25 @@
-import { Grid, Divider, Container, Text } from "@chakra-ui/react";
-import UserControlHeader from "../components/UserControlHeader";
-import CreatePostModal from "../components/CreatePostModal";
-import ProfileBio from "../components/ProfileBio";
-import ProfileHeader from "../components/ProfileHeader";
-import PostsList from "../components/PostsList";
-import loginauthservice from "../features/login-auth/loginauthservice";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-function getPosts() {}
+import { Divider, Container, Text } from '@chakra-ui/react'
+import UserControlHeader from '../components/UserControlHeader'
+import CreatePostModal from '../components/CreatePostModal'
+import ProfileBio from '../components/ProfileBio'
+import ProfileHeader from '../components/ProfileHeader'
+import PostsList from '../components/PostsList'
+import loginauthservice from '../features/login-auth/loginauthservice'
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 function ProfilePage() {
-  const [user, setUser] = useState(null);
-  const params = useParams();
+  const [user, setUser] = useState(null)
+  const params = useParams()
+
+  const loadUser = async () => {
+    const user = await loginauthservice.getUser(params.username)
+    setUser(user)
+  }
+
   useEffect(() => {
-    const loadUser = async () => {
-      const user = await loginauthservice.getUser(params.username);
-      setUser(user);
-    };
-    loadUser();
-  }, []);
+    loadUser()
+  })
 
   return (
     user && (
@@ -32,10 +33,10 @@ function ProfilePage() {
           Posts by
           {user.username}
         </Text>
-          <PostsList />
+        <PostsList author={user.username} />
       </Container>
     )
-  );
+  )
 }
 
-export default ProfilePage;
+export default ProfilePage

@@ -1,4 +1,4 @@
-import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const POSTS_URL = 'http://localhost:5000/api/blogPosts'
@@ -22,31 +22,10 @@ export const addNewPost = createAsyncThunk(
   }
 )
 
-const mockpostsSlice = createSlice({
+const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {
-    postAdded: {
-      reducer(state, action) {
-        state.push(action.payload)
-      },
-      prepare(title, content) {
-        return {
-          payload: {
-            id: nanoid(),
-            imageUrl:
-              'https://cdn.gameloot.se/5052-thickbox_default/marvel-avengers-staty---thanos-16.jpg',
-            imageAlt: 'nice pool',
-            author: 'username',
-            date: 'date',
-            title: title,
-            description: content,
-            likes: '53',
-          },
-        }
-      },
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchPosts.pending, (state, action) => {
@@ -70,6 +49,6 @@ export const selectAllPosts = (state) => state.posts.posts
 export const getPostsStatus = (state) => state.posts.status
 export const getPostsError = (state) => state.posts.error
 
-export const { postAdded } = mockpostsSlice.actions
+export const { postAdded } = postsSlice.actions
 
-export default mockpostsSlice.reducer
+export default postsSlice.reducer
