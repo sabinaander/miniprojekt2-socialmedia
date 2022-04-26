@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useStore } from 'react-redux'
 import {
   Input,
   Stack,
@@ -12,8 +13,18 @@ import {
 } from '@chakra-ui/react'
 import { addNewPost } from '../features/blogPosts/postsSlice'
 import { useNavigate } from 'react-router-dom'
+import loginauthreducer from '../features/login-auth/reducers/loginauthreducer'
 
 function PostForm({ onClose }) {
+  const store = useStore(loginauthreducer)
+  const state = store.getState()
+  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn)
+  const [user, setUser] = useState(state.auth.user)
+
+  store.subscribe(() => {
+    setIsLoggedIn(store.getState().auth.isLoggedIn)
+    setUser(store.getState().auth.user)
+  })
   const {
     handleSubmit,
     register,
@@ -22,10 +33,7 @@ function PostForm({ onClose }) {
   } = useForm()
 
   const navigate = useNavigate()
-
   const dispatch = useDispatch()
-
-  const user = JSON.parse(localStorage.getItem('user'))
 
   const onSubmit = (data) => {
     if (data) {
