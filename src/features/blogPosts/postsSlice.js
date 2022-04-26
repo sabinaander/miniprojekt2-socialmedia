@@ -22,6 +22,12 @@ export const addNewPost = createAsyncThunk(
   }
 )
 
+export const likePost = createAsyncThunk('posts/likePost', async (id) => {
+  const response = await axios.patch(`${POSTS_URL}/${id}/likePost`)
+
+  return response.data
+})
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -42,6 +48,11 @@ const postsSlice = createSlice({
       .addCase(addNewPost.fulfilled, (state, action) => {
         state.posts.push(action.payload)
       })
+      .addCase(likePost.fulfilled, (state, action) => {
+        state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        )
+      })
   },
 })
 
@@ -49,6 +60,6 @@ export const selectAllPosts = (state) => state.posts.posts
 export const getPostsStatus = (state) => state.posts.status
 export const getPostsError = (state) => state.posts.error
 
-export const { postAdded } = postsSlice.actions
+// export const { postAdded } = postsSlice.actions
 
 export default postsSlice.reducer
