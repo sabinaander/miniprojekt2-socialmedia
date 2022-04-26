@@ -5,12 +5,22 @@ import ProfileBio from '../components/ProfileBio'
 import ProfileHeader from '../components/ProfileHeader'
 import PostsList from '../components/PostsList'
 import loginauthservice from '../features/login-auth/loginauthservice'
+import { useStore } from 'react-redux'
+import loginauthreducer from '../features/login-auth/reducers/loginauthreducer'
+
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
 function ProfilePage() {
+  const store = useStore(loginauthreducer)
+  const state = store.getState()
+  const [loggedinUser, setLoggedinUser] = useState(state.auth.user)
   const [user, setUser] = useState(null)
   const params = useParams()
+
+  store.subscribe(() => {
+    setLoggedinUser(store.getState().auth.user)
+  })
 
   const loadUser = async () => {
     const user = await loginauthservice.getUser(params.username)
@@ -19,7 +29,7 @@ function ProfilePage() {
 
   useEffect(() => {
     loadUser()
-  })
+  }, [])
 
   return (
     user && (
@@ -27,7 +37,8 @@ function ProfilePage() {
         <UserControlHeader />
         <ProfileHeader user={user} />
         <ProfileBio user={user} />
-        <CreatePostModal />
+        {user.username === loggedinUser.username && <CreatePostModal />}
+
         <Divider />
         <Text align="center" fontSize="4xl">
           Posts by
