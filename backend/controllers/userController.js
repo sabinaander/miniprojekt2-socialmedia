@@ -112,12 +112,13 @@ const logoutUser = asyncHandler(async (req, res) => {
 // Get user by username
 const getUser = asyncHandler(async (req, res) => {
   const username = req.params.username
-  const user = await User.findOne({username : username}).exec()
+  const user = await User.findOne({ username: username }).exec()
   if (!user) {
     res.status(400);
     res.send({ message: 'This user does not exist.' });
     return;
   }
+  user.password = ''
 
   res.json(user);
 });
@@ -125,7 +126,7 @@ const getUser = asyncHandler(async (req, res) => {
 // delete user by username
 const deleteUser = asyncHandler(async (req, res) => {
   const username = req.params.username
-  const user = await User.findOne({username : username}).exec()
+  const user = await User.findOne({ username: username }).exec()
 
   if (!user) {
     res.status(400);
@@ -141,8 +142,9 @@ const deleteUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const username = req.params.username
   const roleId = req.body.role;
+  console.log(req.body)
 
-  const user = await User.findOne({username : username}).exec()
+  const user = await User.findOne({ username: username }).exec()
   if (!user) {
     res.status(400);
     res.send({ message: 'This user does not exist.' });
@@ -158,21 +160,21 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   user.role = role;
-  user.bio = bio;
-  user.avatar = avatar;
-  user.backgroundimage = backgroundimage;
-  user.email = email;
-  user.username = username;
-  user.password = password;
-  user.website = website;
-  user.website.facebook = website.facebook;
-  user.website.instagram = website.instagram;
-  user.website.linkedin = website.linkedin;
-  user.website.twitter = website.twitter;
+  user.bio = req.body.bio;
+  user.avatar = req.body.avatar;
+  user.backgroundimage = req.body.backgroundimage;
+  user.email = req.body.email;
+  user.username = req.body.username;
+  if (req.body.password) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt)
+    user.password = hashedPassword
+  }
+  user.website = req.body.website;
 
-  user.save();
+  await user.save();
 
-  res.send({ message: 'user has been updated.' });
+  res.send({ username: user.username, email: user.email, _id: user._id });
 });
 
 // Get all users

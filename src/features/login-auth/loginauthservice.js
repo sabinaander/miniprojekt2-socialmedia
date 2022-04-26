@@ -21,16 +21,16 @@ const login = async (email, password) => {
 }
 
 // get users
-const getUser = async (username) => {
+export const getUser = async (username) => {
     const response = await axios
-        .get(API_URL + `/${username}`)
+        .get(API_URL + `${username}`)
     return response.data
 }
 
-const updateUser = async () => {
+const updateUser = async (username, newUserData) => {
     const response = await axios
-        .post(API_URL + "update", {
-        }, { withCredentials: true })
+        .put(API_URL + `${username}`, 
+        newUserData , { withCredentials: true })
 
     localStorage.setItem('user', JSON.stringify(response.data))
     return response.data

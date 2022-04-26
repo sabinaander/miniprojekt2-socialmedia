@@ -31,8 +31,8 @@ export const register = async (username, email, password) => {
   }
 }
 
-export const update = async() => {
-    const user = await loginauthservice.update()
+export const update = async(username, newUserData) => {
+    const user = await loginauthservice.updateUser(username, newUserData)
 
     store.dispatch({
       type: UPDATE_SUCCESS,

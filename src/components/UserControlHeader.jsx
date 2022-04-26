@@ -7,8 +7,6 @@ import { logout } from '../features/login-auth/loginauth'
 import { SettingsIcon } from '@chakra-ui/icons'
 
 function UserControlHeader() {
-  // const currentUser = JSON.parse(localStorage.getItem('user'))
-
   return (
     <Container maxW="100%" padding={2} textAlign="center">
       <Flex>
