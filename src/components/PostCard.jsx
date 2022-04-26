@@ -1,6 +1,7 @@
-import { Box, Image } from '@chakra-ui/react'
+import { Box, Image, Link, Tooltip } from '@chakra-ui/react'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import { parseISO, formatDistanceToNow } from 'date-fns'
+import { parseISO, formatDistanceToNow, format } from 'date-fns'
+import { Link as ReactLink } from 'react-router-dom'
 
 function PostCard({ post }) {
   let timeAgo = ''
@@ -29,7 +30,13 @@ function PostCard({ post }) {
             textTransform="uppercase"
             ml="2"
           >
-            {post.author} &bull; {timeAgo}
+            <Link as={ReactLink} to={`/profile/${post.author}`}>
+              {post.author}
+            </Link>{' '}
+            &bull;{' '}
+            <Tooltip label={format(date, 'dd/MM/yyyy HH:mm')}>
+              {timeAgo}
+            </Tooltip>
           </Box>
         </Box>
 
@@ -50,7 +57,6 @@ function PostCard({ post }) {
 
         <Box display="flex" mt="2" alignItems="center">
           <FavoriteIcon fontSize="medium" color="action" />
-          Like
           <Box as="span" ml="2" fontSize="sm">
             {post.likes} likes
           </Box>
