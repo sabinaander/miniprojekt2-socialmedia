@@ -164,8 +164,7 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
 
-  const roleId = req.body.role;
-  console.log(req.body)
+  
 
 
   const user = await User.findOne({ username: username }).exec()
@@ -176,6 +175,8 @@ const updateUser = asyncHandler(async (req, res) => {
     return;
   }
 
+  if(req.body.role){
+  const roleId = req.body.role; 
   const role = await Role.findById(roleId);
 
   if (!role) {
@@ -183,8 +184,9 @@ const updateUser = asyncHandler(async (req, res) => {
     res.send({ message: 'The specified role does not exist.' });
     return;
   }
-
   user.role = role;
+}
+
   user.bio = req.body.bio;
   user.avatar = req.body.avatar;
   user.backgroundimage = req.body.backgroundimage;
