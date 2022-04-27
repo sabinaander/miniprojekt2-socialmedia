@@ -96,192 +96,195 @@ function ProfileSettingsPage() {
   return (
     !!isLoggedIn &&
     !!user && (
-      <Container bg="gray.100" maxW="container.xl">
-        <Container padding={5} paddingBottom={10}>
-          <Container textAlign="center" backgroundColor="white" padding={5}>
-            <Heading>Account</Heading>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Divider border="2px" mt={6} mb={6} />
-              <Flex>
-                <Text fontSize="2xl">Email</Text>
-                <Spacer />
-                {!editModeEmail && (
-                  <Center>
-                    <Text>{user.email}</Text>
-                    <EditIcon
-                      cursor="pointer"
-                      ml={5}
-                      w={6}
-                      h={6}
-                      onClick={() => setEditModeEmail(true)}
-                    ></EditIcon>
-                  </Center>
-                )}
-                {editModeEmail && (
-                  <Box>
-                    <Center gap="1rem" mb={2}>
-                      <FormControl>
-                        <Input
-                          {...register("email", {
-                            required: true,
-                            value: user.email,
-                          })}
-                        />
-                      </FormControl>
-
-                      <CloseIcon
-                        border="solid 2px"
-                        borderRadius={4}
-                        p={1}
-                        w={6}
-                        h={6}
-                        cursor="pointer"
-                        onClick={() => setEditModeEmail(false)}
+      <Box pt={10} pb={10} pl={1} pr={1} bg="gray.100" w="100%" >
+        <Container
+          textAlign="center"
+          padding={{ base: 0, sm: 5 }}
+          paddingBottom={10}
+          backgroundColor="white"
+        >
+          <Heading>Account</Heading>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Divider border="2px" mt={6} mb={6} />
+            <Flex direction={{ base: "column", md: "row" }}>
+              <Text fontSize="2xl">Email</Text>
+              <Spacer />
+              {!editModeEmail && (
+                <Center>
+                  <Text>{user.email}</Text>
+                  <EditIcon
+                    cursor="pointer"
+                    ml={5}
+                    w={6}
+                    h={6}
+                    onClick={() => setEditModeEmail(true)}
+                  ></EditIcon>
+                </Center>
+              )}
+              {editModeEmail && (
+                <Box>
+                  <Center gap="1rem" mb={2}>
+                    <FormControl>
+                      <Input
+                        {...register("email", {
+                          required: true,
+                          value: user.email,
+                        })}
                       />
-                    </Center>
+                    </FormControl>
 
-                    <Button type="submit" colorScheme="purple" isFullWidth>
-                      Save edit
-                    </Button>
-                  </Box>
-                )}
-              </Flex>
-
-              <Divider border="2px" mt={6} mb={6} />
-
-              <Flex>
-                <Text fontSize="2xl">Username</Text>
-                <Spacer />
-                {!editModeUsername && (
-                  <Center>
-                    <Text>{user.username}</Text>
-                    <EditIcon
-                      ml={5}
+                    <CloseIcon
+                      border="solid 2px"
+                      borderRadius={4}
+                      p={1}
                       w={6}
                       h={6}
                       cursor="pointer"
-                      onClick={() => setEditModeUsername(true)}
+                      onClick={() => setEditModeEmail(false)}
                     />
                   </Center>
-                )}
 
-                {editModeUsername && (
-                  <Box>
-                    <Center gap="1rem" mb={2}>
-                      <FormControl>
-                        <Input
-                          {...register("username", {
-                            required: true,
-                            value: user.username,
-                          })}
-                        />
-                      </FormControl>
-
-                      <CloseIcon
-                        border="solid 2px"
-                        borderRadius={4}
-                        p={1}
-                        w={6}
-                        h={6}
-                        cursor="pointer"
-                        onClick={() => {
-                          setEditModeUsername(false);
-                        }}
-                      />
-                    </Center>
-
-                    <Button type="submit" colorScheme="purple" isFullWidth>
-                      Save edit
-                    </Button>
-                  </Box>
-                )}
-              </Flex>
-
-              <Divider border="2px" mt={6} mb={6} />
-
-              <Flex>
-                <Text fontSize="2xl">Password</Text>
-                <Spacer />
-                {!editModePassword && (
-                  <Center>
-                    <Text>{user.password}</Text>
-                    <EditIcon
-                      cursor="pointer"
-                      ml={5}
-                      w={6}
-                      h={6}
-                      onClick={() => setEditModePassword(true)}
-                    ></EditIcon>
-                  </Center>
-                )}
-                {editModePassword && (
-                  <Box>
-                    <Center gap="1rem" mb={2}>
-                      <FormControl>
-                        <Input
-                          {...register("password", {
-                            required: true,
-                            value: user.password,
-                          })}
-                        />
-                      </FormControl>
-
-                      <CloseIcon
-                        border="solid 2px"
-                        borderRadius={4}
-                        p={1}
-                        w={6}
-                        h={6}
-                        cursor="pointer"
-                        onClick={() => {
-                          setEditModePassword(false);
-                        }}
-                      />
-                    </Center>
-
-                    <Button type="submit" colorScheme="purple" isFullWidth>
-                      Save edit
-                    </Button>
-                  </Box>
-                )}
-              </Flex>
-            </form>
+                  <Button type="submit" colorScheme="purple" isFullWidth>
+                    Save edit
+                  </Button>
+                </Box>
+              )}
+            </Flex>
 
             <Divider border="2px" mt={6} mb={6} />
 
-            <Button
-              variant="outline"
-              border="2px"
-              borderColor="gray.500"
-              onClick={onOpen}
-            >
-              Delete account
-            </Button>
+            <Flex direction={{ base: "column", md: "row" }}>
+              <Text fontSize="2xl">Username</Text>
+              <Spacer />
+              {!editModeUsername && (
+                <Center>
+                  <Text>{user.username}</Text>
+                  <EditIcon
+                    ml={5}
+                    w={6}
+                    h={6}
+                    cursor="pointer"
+                    onClick={() => setEditModeUsername(true)}
+                  />
+                </Center>
+              )}
 
-            <Modal isOpen={isOpen} onClose={onClose}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Delete your account</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>Are you sure? This can't be reversed.</ModalBody>
+              {editModeUsername && (
+                <Box>
+                  <Center gap="1rem" mb={2}>
+                    <FormControl>
+                      <Input
+                        {...register("username", {
+                          required: true,
+                          value: user.username,
+                        })}
+                      />
+                    </FormControl>
 
-                <ModalFooter>
-                  <Button
-                    colorScheme="blue"
-                    mr={3}
-                    onClick={() => deleteuser(user.username)}
-                  >
-                    DELETE
+                    <CloseIcon
+                      border="solid 2px"
+                      borderRadius={4}
+                      p={1}
+                      w={6}
+                      h={6}
+                      cursor="pointer"
+                      onClick={() => {
+                        setEditModeUsername(false);
+                      }}
+                    />
+                  </Center>
+
+                  <Button type="submit" colorScheme="purple" isFullWidth>
+                    Save edit
                   </Button>
-                  <Button variant="ghost" onClick={onClose}>
-                    Cancel
+                </Box>
+              )}
+            </Flex>
+
+            <Divider border="2px" mt={6} mb={6} />
+
+            <Flex direction={{ base: "column", md: "row" }}>
+              <Text fontSize="2xl">Password</Text>
+              <Spacer />
+              {!editModePassword && (
+                <Center>
+                  <Text>{user.password}</Text>
+                  <EditIcon
+                    cursor="pointer"
+                    ml={5}
+                    w={6}
+                    h={6}
+                    onClick={() => setEditModePassword(true)}
+                  ></EditIcon>
+                </Center>
+              )}
+              {editModePassword && (
+                <Box>
+                  <Center gap="1rem" mb={2}>
+                    <FormControl>
+                      <Input
+                        {...register("password", {
+                          required: true,
+                          value: user.password,
+                        })}
+                      />
+                    </FormControl>
+
+                    <CloseIcon
+                      border="solid 2px"
+                      borderRadius={4}
+                      p={1}
+                      w={6}
+                      h={6}
+                      cursor="pointer"
+                      onClick={() => {
+                        setEditModePassword(false);
+                      }}
+                    />
+                  </Center>
+
+                  <Button type="submit" colorScheme="purple" isFullWidth>
+                    Save edit
                   </Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
-          </Container>
+                </Box>
+              )}
+            </Flex>
+          </form>
+
+          <Divider border="2px" mt={6} mb={6} />
+
+          <Button
+            variant="outline"
+            border="2px"
+            borderColor="gray.500"
+            onClick={onOpen}
+          >
+            Delete account
+          </Button>
+
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Delete your account</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>Are you sure? This can't be reversed.</ModalBody>
+
+              <ModalFooter>
+                <Button
+                  colorScheme="blue"
+                  mr={3}
+                  onClick={() => deleteuser(user.username)}
+                >
+                  DELETE
+                </Button>
+                <Button variant="ghost" onClick={onClose}>
+                  Cancel
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </Container>
-      </Container>
+      </Box>
     )
   );
 }
