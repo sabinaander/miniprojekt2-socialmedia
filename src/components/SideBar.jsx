@@ -32,7 +32,7 @@ function SideBar() {
           </Flex>
         </Link>
 
-        <Link to="/explore">
+        {/* <Link to="/explore">
           <Flex gap="2rem" mb={5}>
             <TagIcon fontSize="medium" color="action" />
             <Text fontSize="lg" display={{ base: "none", md: "block" }}>
@@ -48,7 +48,7 @@ function SideBar() {
               Notifications
             </Text>
           </Flex>
-        </Link>
+        </Link> */}
 
         <Link to={`/profile/${user.username}`}>
           <Flex gap="2rem" mb={5}>

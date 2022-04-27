@@ -58,13 +58,13 @@ function Header() {
             </Heading>
           </Link>
 
-          <InputGroup display={{ base: "none", md: "block" }}>
+          {/* <InputGroup display={{ base: "none", md: "block" }}>
             <InputLeftElement
               pointerEvents="none"
               children={<SearchIcon color="gray.300" />}
             />
             <Input placeholder="Search for posts..." />
-          </InputGroup>
+          </InputGroup> */}
         </Center>
 
         <Spacer />
