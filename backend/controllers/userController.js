@@ -31,7 +31,6 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // Get default role
   const userRole = (await Role.find({ name: 'user' })).pop();
-  console.log(userRole);
 
   // Create user
   const user = await User.create({
@@ -51,12 +50,13 @@ const registerUser = asyncHandler(async (req, res) => {
   req.session.id = uuid.v4();
   req.session.username = user.username;
   req.session.loginDate = new Date();
-  req.session.role = undefined; // User could have a role (access privileges)
+  req.session.role = userRole;
 
   res.status(201).json({
     _id: user._id,
     username: user.username,
     email: user.email,
+    role: user.role.name,
   });
 });
 
@@ -70,9 +70,8 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   // Check for user email
-  const user = await User.findOne({ email: email }).exec();
+  const user = await User.findOne({ email: email }).populate('role').exec();
 
-  console.log(user);
   // checks to see if user exists
   if (!user) {
     res.status(400);
@@ -90,12 +89,13 @@ const loginUser = asyncHandler(async (req, res) => {
   req.session.id = uuid.v4();
   req.session.username = user.username;
   req.session.loginDate = new Date();
-  req.session.role = undefined; // User could have a role (access privileges)
+  req.session.role = user.role;
 
   res.send({
     _id: user._id,
     username: user.username,
     email: user.email,
+    role: user.role.name,
   });
 });
 
@@ -111,26 +111,49 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 // Get user by username
 const getUser = asyncHandler(async (req, res) => {
-
-  const username = req.params.username
-  const user = await User.findOne({ username: username }).exec()
+  const username = req.params.username;
+  const user = await User.findOne({ username: username }).exec();
 
   if (!user) {
     res.status(400);
     res.send({ message: 'This user does not exist.' });
     return;
   }
-  user.password = ''
+  user.password = '';
 
   res.json(user);
 });
 
+// Get current logged in user
+const getCurrentUser = asyncHandler(async (req, res) => {
+  const username = req.session.username;
+  if (!username) {
+    res.status(403);
+    res.send({ message: 'You are not currently logged in.' });
+    return;
+  }
+
+  // Should only happen if the logged in user has been removed
+  const user = await User.findOne({ username }).populate('role').exec();
+  if (!user) {
+    res.status(403);
+    res.send({ message: 'Could not find the currently logged on user.' });
+    return;
+  }
+
+  const response = {
+    username: user.username,
+    email: user.email,
+    role: user.role.name,
+  };
+
+  res.json(response);
+});
+
 // delete user by username
 const deleteUser = asyncHandler(async (req, res) => {
-
-  const username = req.params.username
-  const user = await User.findOne({ username: username }).exec()
-
+  const username = req.params.username;
+  const user = await User.findOne({ username: username }).exec();
 
   if (!user) {
     res.status(400);
@@ -144,62 +167,58 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 // update user, right now you can only update a users role
 const updateUser = asyncHandler(async (req, res) => {
-
-  
   // checks to see if cookie session id is existing
-  if(!req.session.id){
+  if (!req.session.id) {
     res.status(401);
     res.send({ message: 'Unauthorized save attempt.' });
     return;
   }
 
-  const username = req.params.username
-
-  // todo: maybe allow admins.   
   //(now checks so the cookie name and localstorage name is same)
-  if(req.session.username !== username){
+  if (
+    req.session.role.name !== 'admin' &&
+    req.session.username !== req.params.username
+  ) {
     res.status(403);
-    res.send({ message: 'Not allowed to update other users.' });
+    res.send({ message: 'You are not allowed to update other users.' });
     return;
   }
 
-
-  const roleId = req.body.role;
-  console.log(req.body)
-
-
-  const user = await User.findOne({ username: username }).exec()
-
+  const user = await User.findOne({ username: req.params.username }).exec();
   if (!user) {
     res.status(400);
     res.send({ message: 'This user does not exist.' });
     return;
   }
 
-  const role = await Role.findById(roleId);
+  if (req.body.role) {
+    const roleId = req.body.role;
+    const role = await Role.findById(roleId);
 
-  if (!role) {
-    res.status(400);
-    res.send({ message: 'The specified role does not exist.' });
-    return;
+    if (!role) {
+      res.status(400);
+      res.send({ message: 'The specified role does not exist.' });
+      return;
+    }
+
+    user.role = role;
   }
 
-  user.role = role;
-  user.bio = req.body.bio;
-  user.avatar = req.body.avatar;
-  user.backgroundimage = req.body.backgroundimage;
-  user.email = req.body.email;
-  user.username = req.body.username;
+  if (req.body.bio) user.bio = req.body.bio;
+  if (req.body.avatar) user.avatar = req.body.avatar;
+  if (req.body.backgroundimage) user.backgroundimage = req.body.backgroundimage;
+  if (req.body.email) user.email = req.body.email;
+  if (req.body.username) user.username = req.body.username;
   if (req.body.password) {
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt)
-    user.password = hashedPassword
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    user.password = hashedPassword;
   }
-  user.website = req.body.website;
+  if (req.body.website) user.website = req.body.website;
 
   await user.save();
 
-  res.send({ username: user.username, email: user.email, _id: user._id });
+  res.send({ username: user.username, email: user.email, role: user.role });
 });
 
 // Get all users
@@ -213,6 +232,7 @@ const getUsers = asyncHandler(async (req, res) => {
 
   res.json(users);
 });
+
 const getRoles = asyncHandler(async (req, res) => {
   const roles = await Role.find();
 
@@ -229,6 +249,7 @@ module.exports = {
   loginUser,
   getUser,
   getUsers,
+  getCurrentUser,
   deleteUser,
   logoutUser,
   getRoles,
