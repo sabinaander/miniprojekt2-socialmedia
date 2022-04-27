@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Select, Tr, Td } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
@@ -6,6 +6,10 @@ import SaveIcon from '@mui/icons-material/Save';
 
 function AdminUserDetails(props) {
   const [userRole, setUserRole] = useState(props.user.role);
+
+  useEffect(() => {
+    setUserRole(props.user.role);
+  }, [props.user.role]);
 
   return (
     <Tr>
@@ -28,6 +32,7 @@ function AdminUserDetails(props) {
         <Button
           margin="0 1rem"
           rightIcon={<SaveIcon />}
+          isDisabled={userRole._id === props.user.role._id}
           onClick={() =>
             axios
               .put(
@@ -56,7 +61,7 @@ function AdminUserDetails(props) {
                   withCredentials: true,
                 }
               )
-              .then((res) => console.log(res.data))
+              .then(() => props.removeUserFromState())
               .catch((error) => {
                 props.setError(error.response.data?.message);
                 props.displayError();

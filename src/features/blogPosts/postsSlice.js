@@ -74,17 +74,19 @@ const postsSlice = createSlice({
         state.posts.push(action.payload);
       })
       .addCase(likePost.fulfilled, (state, action) => {
-        state.posts.map((post) =>
+        state.posts = state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         );
       })
       .addCase(editPost.fulfilled, (state, action) => {
-        state.posts.map((post) =>
-          post.id === action.payload.id ? action.payload : post
+        state.posts = state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
         );
       })
       .addCase(deletePost.fulfilled, (state, action) => {
-        state.posts.filter((post) => post._id !== action.payload);
+        state.posts = state.posts.filter(
+          (post) => post._id !== action.payload.data._id
+        );
       });
   },
 });
