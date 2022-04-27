@@ -163,7 +163,6 @@ const updateUser = asyncHandler(async (req, res) => {
     return;
   }
 
-  const username = req.params.username;
 
   const roleId = req.body.role;
   console.log(req.body)
