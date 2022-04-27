@@ -1,4 +1,4 @@
-import { Flex, Container, Text, useRadio } from "@chakra-ui/react";
+import { Flex, Container, Text, useRadio, Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import TagIcon from "@mui/icons-material/Tag";
@@ -21,8 +21,8 @@ function SideBar() {
   });
 
   return (
-    <Container maxW="20vw" mt={10}>
-      <Flex direction="column">
+    <Box margin="0px" padding="0px" id="a" w="max-content" mt={10} pl={5} pr={5}>
+      <Flex direction="column" >
         <Link to="/">
           <Flex gap="2rem" mb={5}>
             <HomeIcon fontSize="medium" color="action" />
@@ -67,7 +67,7 @@ function SideBar() {
           </Flex>
         </Link>
       </Flex>
-    </Container>
+    </Box>
   );
 }
 
