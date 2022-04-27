@@ -57,7 +57,9 @@ function ProfilePage() {
         <Text align="center" fontSize="4xl">
           Posts by {profileUser.username}
         </Text>
-        <PostsList author={profileUser.username} />
+        <Box p={5}>
+          <PostsList author={profileUser.username} />
+        </Box>
       </Box>
     )
   );
