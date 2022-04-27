@@ -18,7 +18,7 @@ import { useStore } from "react-redux";
 import PostForm from "../components/PostForm";
 import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
 
-function CreatePostModal() {
+function CreatePostModal(props) {
   const store = useStore(loginauthreducer);
   const state = store.getState();
   const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
@@ -35,8 +35,8 @@ function CreatePostModal() {
     <Center padding="0.5rem" gap={{base:"0.5rem", lg: "2rem"}} w="100%" mb={3}>
       <Avatar
         size="xl"
-        name={user.username}
-        src={user.avatar}
+        name={props.user.username}
+        src={props.user.avatar}
       />
       <Button
         onClick={onOpen}
