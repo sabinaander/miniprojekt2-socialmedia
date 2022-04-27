@@ -144,8 +144,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 // update user, right now you can only update a users role
 const updateUser = asyncHandler(async (req, res) => {
-
-  
+ 
   // checks to see if cookie session id is existing
   if(!req.session.id){
     res.status(401);
@@ -162,10 +161,6 @@ const updateUser = asyncHandler(async (req, res) => {
     res.send({ message: 'Not allowed to update other users.' });
     return;
   }
-
-
-  
-
 
   const user = await User.findOne({ username: username }).exec()
 

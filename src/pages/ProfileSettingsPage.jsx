@@ -25,7 +25,6 @@ import { useEffect, useState } from "react";
 import { useStore } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { update, deleteuser } from "../features/login-auth/loginauth";
-import UserControlHeader from "../components/UserControlHeader";
 import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
 import { getUser } from "../features/login-auth/loginauthservice";
 import { useForm } from "react-hook-form";
@@ -98,7 +97,6 @@ function ProfileSettingsPage() {
     !!isLoggedIn &&
     !!user && (
       <Container bg="gray.100" maxW="container.xl">
-        <UserControlHeader />
         <Container padding={5} paddingBottom={10}>
           <Container textAlign="center" backgroundColor="white" padding={5}>
             <Heading>Account</Heading>
