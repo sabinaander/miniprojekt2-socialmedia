@@ -32,7 +32,7 @@ function ProfilePage() {
 
   useEffect(() => {
     loadUser();
-  },[);
+  },[]);
 
   return (
     profileUser && (
