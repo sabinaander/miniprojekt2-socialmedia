@@ -170,7 +170,18 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 
   const username = req.params.username;
-  const user = await User.findOne({ username: username }).exec();
+  const user = await User.findOne({ username: username })
+    .populate('role')
+    .exec();
+
+  const adminRole = await Role.findOne({ name: 'admin' }).exec();
+  const admins = await User.find({ role: adminRole }).exec();
+
+  if (user.role.name === 'admin' && admins.length === 1) {
+    res.status(406);
+    res.send({ message: 'You must always have atleast one admin account.' });
+    return;
+  }
 
   if (!user) {
     res.status(400);
@@ -201,7 +212,10 @@ const updateUser = asyncHandler(async (req, res) => {
     return;
   }
 
-  const user = await User.findOne({ username: req.params.username }).exec();
+  const user = await User.findOne({ username: req.params.username })
+    .populate('role')
+    .exec();
+
   if (!user) {
     res.status(400);
     res.send({ message: 'This user does not exist.' });
@@ -215,6 +229,19 @@ const updateUser = asyncHandler(async (req, res) => {
     if (!role) {
       res.status(400);
       res.send({ message: 'The specified role does not exist.' });
+      return;
+    }
+
+    const adminRole = await Role.findOne({ name: 'admin' }).exec();
+    const admins = await User.find({ role: adminRole }).exec();
+
+    if (
+      user.role.name === 'admin' &&
+      req.body.role !== 'admin' &&
+      admins.length === 1
+    ) {
+      res.status(406);
+      res.send({ message: 'You must always have atleast one admin account.' });
       return;
     }
 
