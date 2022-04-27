@@ -53,7 +53,6 @@ function PostForm({ onClose, postData }) {
           duration: 3000,
           isClosable: true,
         })
-        console.log('add was used', data)
       } else {
         dispatch(
           editPost({
@@ -64,7 +63,6 @@ function PostForm({ onClose, postData }) {
           })
         )
         onClose()
-        console.log(data)
       }
       // reset(data) // - not working, needs investigating
     } catch (error) {
