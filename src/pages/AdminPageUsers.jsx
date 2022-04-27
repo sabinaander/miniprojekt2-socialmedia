@@ -1,7 +1,7 @@
 import AdminContent from '../components/AdminContent';
 
-function AdminPage() {
+function AdminPageUsers() {
   return <AdminContent />;
 }
 
-export default AdminPage;
+export default AdminPageUsers;

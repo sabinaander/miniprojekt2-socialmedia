@@ -111,8 +111,10 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 // Get user by username
 const getUser = asyncHandler(async (req, res) => {
+
   const username = req.params.username
   const user = await User.findOne({ username: username }).exec()
+
   if (!user) {
     res.status(400);
     res.send({ message: 'This user does not exist.' });
@@ -125,8 +127,10 @@ const getUser = asyncHandler(async (req, res) => {
 
 // delete user by username
 const deleteUser = asyncHandler(async (req, res) => {
+
   const username = req.params.username
   const user = await User.findOne({ username: username }).exec()
+
 
   if (!user) {
     res.status(400);
@@ -134,12 +138,13 @@ const deleteUser = asyncHandler(async (req, res) => {
     return;
   }
 
-  await User.findByIdAndDelete(user._id)
-  res.send({ message: 'user has been deleted.' })
-})
+  await User.findByIdAndDelete(user._id);
+  res.send({ message: 'user has been deleted.' });
+});
 
 // update user, right now you can only update a users role
 const updateUser = asyncHandler(async (req, res) => {
+
   
   // checks to see if cookie session id is existing
   if(!req.session.id){
@@ -157,10 +162,15 @@ const updateUser = asyncHandler(async (req, res) => {
     res.send({ message: 'Not allowed to update other users.' });
     return;
   }
+
+  const username = req.params.username;
+
   const roleId = req.body.role;
   console.log(req.body)
 
+
   const user = await User.findOne({ username: username }).exec()
+
   if (!user) {
     res.status(400);
     res.send({ message: 'This user does not exist.' });

@@ -1,5 +1,5 @@
 import { Tr, Td, Button, Select } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { DeleteIcon } from '@chakra-ui/icons';
 import SaveIcon from '@mui/icons-material/Save';
@@ -30,7 +30,7 @@ function AdminUserDetails(props) {
           rightIcon={<SaveIcon />}
           onClick={() => {
             axios
-              .put('http://localhost:5000/api/users/' + props.user._id, {
+              .put('http://localhost:5000/api/users/' + props.user.username, {
                 role: userRole._id,
               })
               .then((res) => console.log('role saved'));
