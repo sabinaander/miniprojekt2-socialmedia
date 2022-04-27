@@ -52,6 +52,7 @@ function ProfileHeader(props) {
       });
       setEditModeAvatar(false);
       setEditModeBackGroundImage(false);
+      props.loadUser(props.profileUser.username)
     } catch (e) {
       console.log(e);
       setErrorMessage(e.response.data.message);
@@ -61,112 +62,123 @@ function ProfileHeader(props) {
 
   return (
     props.profileUser && (
-      <Container maxW="100%" padding={0}>
+      <Box maxW="100%">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Box position="absolute" maxW="100%" w="100%" height="30vh" padding={2} role="group" backgroundImage={props.profileUser.backgroundimage}>
-            {!!props.isLoggedIn &&
-              props.profileUser.username === props.authUser.username && (
-                <EditIcon
-                  d="none"
-                  _groupHover={{ display: "inline" }}
-                  color="white"
-                  float="right"
-                  cursor="pointer"
-                  ml={5}
-                  w={6}
-                  h={6}
-                  onClick={() => setEditModeBackGroundImage(true)}
-                ></EditIcon>
-              )}
-          </Box>
-          {EditModeBackGroundImage && (
-            <Box>
-              <Center gap="1rem" mb={2}>
-                <FormControl>
-                  <Input
-                    {...register("backgroundimage", {
-                      required: true,
-                      value: props.profileUser.backgroundimage,
-                    })}
-                  />
-                </FormControl>
-
-                <CloseIcon
-                  border="solid 2px"
-                  borderRadius={4}
-                  p={1}
-                  w={6}
-                  h={6}
-                  cursor="pointer"
-                  onClick={() => setEditModeBackGroundImage(false)}
-                />
-              </Center>
-
-              <Button type="submit" colorScheme="purple" isFullWidth>
-                Save edit
-              </Button>
+          <Box height="30vh" position="relative">
+            <Box
+              position="absolute"
+              width="100%"
+              backgroundColor="black"
+              height="100%"
+              left="0"
+              role="group"
+              backgroundImage={props.profileUser.backgroundimage}
+            >
+              {!!props.isLoggedIn &&
+                props.profileUser.username === props.authUser.username && (
+                  <EditIcon
+                    d="none"
+                    _groupHover={{ display: "inline" }}
+                    color="white"
+                    float="right"
+                    cursor="pointer"
+                    ml={5}
+                    w={6}
+                    h={6}
+                    onClick={() => setEditModeBackGroundImage(true)}
+                  ></EditIcon>
+                )}
             </Box>
-          )}
-          <Box role="group" position="relative" w="min-content">
-            <Avatar
-              size="xl"
-              name={props.profileUser.username}
-              src={props.profileUser.avatar}
-            />
-            <Heading as="h1" size="2xl" color="white">
-              {props.profileUser.username}
-            </Heading>
-            {!!props.isLoggedIn &&
-              props.profileUser.username === props.authUser.username && (
-                <EditIcon
-                  d="none"
-                  _groupHover={{ display: "inline" }}
-                  position="absolute"
-                  left="40%"
-                  color="white"
-                  cursor="pointer"
-                  ml={5}
-                  w={6}
-                  h={6}
-                  onClick={() => setEditModeAvatar(true)}
-                ></EditIcon>
-              )}
-          </Box>
-          {editModeAvatar && (
-            <Box>
-              <Center gap="1rem" mb={2}>
-                <FormControl>
-                  <Input
-                    {...register("avatar", {
-                      required: true,
-                      value: props.profileUser.avatar,
-                    })}
+
+            {EditModeBackGroundImage && (
+              <Box>
+                <Center gap="1rem" mb={2}>
+                  <FormControl>
+                    <Input
+                      {...register("backgroundimage", {
+                        required: true,
+                        value: props.profileUser.backgroundimage,
+                      })}
+                    />
+                  </FormControl>
+
+                  <CloseIcon
+                    border="solid 2px"
+                    borderRadius={4}
+                    p={1}
+                    w={6}
+                    h={6}
+                    cursor="pointer"
+                    onClick={() => setEditModeBackGroundImage(false)}
                   />
-                </FormControl>
+                </Center>
 
-                <CloseIcon
-                  border="solid 2px"
-                  borderRadius={4}
-                  p={1}
-                  w={6}
-                  h={6}
-                  cursor="pointer"
-                  onClick={() => setEditModeAvatar(false)}
+                <Button type="submit" colorScheme="purple" isFullWidth>
+                  Save edit
+                </Button>
+              </Box>
+            )}
+            <Box position="relative" w="min-content" padding={3}>
+              <Box position="relative" role="group" w="min-content">
+                <Avatar
+                  size="xl"
+                  name={props.profileUser.username}
+                  src={props.profileUser.avatar}
                 />
-              </Center>
-
-              <Button type="submit" colorScheme="purple" isFullWidth>
-                Save edit
-              </Button>
+                {!!props.isLoggedIn &&
+                  props.profileUser.username === props.authUser.username && (
+                    <EditIcon
+                      d="none"
+                      _groupHover={{ display: "inline" }}
+                      position="absolute"
+                      left="40%"
+                      color="white"
+                      cursor="pointer"
+                      ml={5}
+                      w={6}
+                      h={6}
+                      onClick={() => setEditModeAvatar(true)}
+                    ></EditIcon>
+                  )}
+              </Box>
+              <Heading as="h1" size="2xl" color="white" >
+                {props.profileUser.username}
+              </Heading>
             </Box>
-          )}
-          <Flex>
-            
+            {editModeAvatar && (
+              <Box>
+                <Center gap="1rem" mb={2}>
+                  <FormControl>
+                    <Input
+                      {...register("avatar", {
+                        required: true,
+                        value: props.profileUser.avatar,
+                      })}
+                    />
+                  </FormControl>
 
-            <Spacer />
-          </Flex>
+                  <CloseIcon
+                    border="solid 2px"
+                    borderRadius={4}
+                    p={1}
+                    w={6}
+                    h={6}
+                    cursor="pointer"
+                    onClick={() => setEditModeAvatar(false)}
+                  />
+                </Center>
+
+                <Button type="submit" colorScheme="purple" isFullWidth>
+                  Save edit
+                </Button>
+              </Box>
+            )}
+            <Flex>
+              <Spacer />
+            </Flex>
+          </Box>
         </form>
-      </Container>
+      </Box>
     )
   );
 }

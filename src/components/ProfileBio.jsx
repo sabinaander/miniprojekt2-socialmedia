@@ -57,6 +57,7 @@ function ProfileBio(props) {
       });
       setEditModeBio(false);
       setEditModeWebsite(false);
+      props.loadUser(props.profileUser.username)
     } catch (e) {
       console.log(e);
       setErrorMessage(e.response.data.message);
