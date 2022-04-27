@@ -17,6 +17,7 @@ import {
   ModalBody,
   ModalFooter,
   Modal,
+  Tooltip,
 } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
@@ -54,8 +55,8 @@ function ProfileHeader(props) {
         duration: 4000,
         isClosable: true,
       });
-      avatarDisclosure.onClose()
-      backgroundDisclosure.onClose()
+      avatarDisclosure.onClose();
+      backgroundDisclosure.onClose();
 
       props.loadUser(props.profileUser.username);
     } catch (e) {
@@ -68,7 +69,7 @@ function ProfileHeader(props) {
   return (
     props.profileUser && (
       <Box maxW="100%">
-        <form id="bioForm" onSubmit={handleSubmit(onSubmit)}>
+        <form id="headerForm" onSubmit={handleSubmit(onSubmit)}>
           <Box height="30vh" position="relative">
             <Box
               position="absolute"
@@ -82,57 +83,65 @@ function ProfileHeader(props) {
             >
               {!!props.isLoggedIn &&
                 props.profileUser.username === props.authUser.username && (
-                  <EditIcon
-                    d="none"
-                    _groupHover={{ display: "inline" }}
-                    color="white"
-                    float="right"
-                    cursor="pointer"
-                    ml={5}
-                    w={6}
-                    h={6}
-                    onClick={backgroundDisclosure.onOpen}
-                  ></EditIcon>
+                  <Tooltip
+                    hasArrow
+                    label="Edit background image"
+                    bg="gray.300"
+                    color="black"
+                  >
+                    <EditIcon
+                      d="none"
+                      _groupHover={{ display: "inline" }}
+                      color="white"
+                      float="right"
+                      cursor="pointer"
+                      mr={5}
+                      mt={5}
+                      w={6}
+                      h={6}
+                      onClick={backgroundDisclosure.onOpen}
+                    ></EditIcon>
+                  </Tooltip>
                 )}
             </Box>
 
-              <Modal
-                closeOnOverlayClick={false}
-                isOpen={backgroundDisclosure.isOpen}
-                onClose={backgroundDisclosure.onClose}
-              >
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Edit background image</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody pb={6}>
-                    <Center gap="1rem" mb={2}>
-                      <FormControl>
-                        <Input
-                          {...register("backgroundimage", {
-                            required: true,
-                            value: props.profileUser.backgroundimage,
-                          })}
-                        />
-                      </FormControl>
-                    </Center>
+            <Modal
+              closeOnOverlayClick={false}
+              isOpen={backgroundDisclosure.isOpen}
+              onClose={backgroundDisclosure.onClose}
+            >
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Edit background image</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody pb={6}>
+                  <Center gap="1rem" mb={2}>
+                    <FormControl>
+                      <Input
+                        {...register("backgroundimage", {
+                          required: true,
+                          value: props.profileUser.backgroundimage,
+                        })}
+                      />
+                    </FormControl>
+                  </Center>
 
-                    <Button
-                      form="bioForm"
-                      type="submit"
-                      colorScheme="purple"
-                      isFullWidth
-                    >
-                      Save edit
-                    </Button>
-                  </ModalBody>
+                  <Button
+                    form="headerForm"
+                    type="submit"
+                    colorScheme="purple"
+                    isFullWidth
+                  >
+                    Save edit
+                  </Button>
+                </ModalBody>
 
-                  <ModalFooter>
-                    <Button onClick={backgroundDisclosure.onClose}>Cancel</Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
-           
+                <ModalFooter>
+                  <Button onClick={backgroundDisclosure.onClose}>Cancel</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+
             <Box position="relative" w="min-content" padding={3}>
               <Box position="relative" role="group" w="min-content">
                 <Avatar
@@ -142,61 +151,68 @@ function ProfileHeader(props) {
                 />
                 {!!props.isLoggedIn &&
                   props.profileUser.username === props.authUser.username && (
-                    <EditIcon
-                      d="none"
-                      _groupHover={{ display: "inline" }}
-                      position="absolute"
-                      left="40%"
-                      color="white"
-                      cursor="pointer"
-                      ml={5}
-                      w={6}
-                      h={6}
-                      onClick={avatarDisclosure.onOpen}
-                    ></EditIcon>
+                    <Tooltip
+                      hasArrow
+                      label="Edit avatar"
+                      bg="gray.300"
+                      color="black"
+                    >
+                      <EditIcon
+                        d="none"
+                        _groupHover={{ display: "inline" }}
+                        position="absolute"
+                        left="40%"
+                        color="white"
+                        cursor="pointer"
+                        ml={5}
+                        w={6}
+                        h={6}
+                        onClick={avatarDisclosure.onOpen}
+                      ></EditIcon>
+                    </Tooltip>
                   )}
               </Box>
               <Heading as="h1" size="2xl" color="white">
                 {props.profileUser.username}
               </Heading>
             </Box>
-              <Modal
-                closeOnOverlayClick={false}
-                isOpen={avatarDisclosure.isOpen}
-                onClose={avatarDisclosure.onClose}
-              >
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Edit avatar picture</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody pb={6}>
-                    <Center gap="1rem" mb={2}>
-                      <FormControl>
-                        <Input
-                          {...register("avatar", {
-                            required: true,
-                            value: props.profileUser.avatar,
-                          })}
-                        />
-                      </FormControl>
-                    </Center>
+            <Modal
+              closeOnOverlayClick={false}
+              isOpen={avatarDisclosure.isOpen}
+              onClose={avatarDisclosure.onClose}
+            >
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Edit avatar picture</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody pb={6}>
+                  <Center gap="1rem" mb={2}>
+                    <FormControl>
+                      <Input
+                        {...register("avatar", {
+                          required: true,
+                          value: props.profileUser.avatar,
+                        })}
+                      />
+                    </FormControl>
+                  </Center>
 
-                    <Button
-                      form="bioForm"
-                      type="submit"
-                      colorScheme="purple"
-                      isFullWidth
-                    >
-                      Save edit
-                    </Button>
-                  </ModalBody>
+                  <Button
+                    form="headerForm"
+                    type="submit"
+                    colorScheme="purple"
+                    isFullWidth
+                  >
+                    Save edit
+                  </Button>
+                </ModalBody>
 
-                  <ModalFooter>
-                    <Button onClick={avatarDisclosure.onClose}>Cancel</Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
-            
+                <ModalFooter>
+                  <Button onClick={avatarDisclosure.onClose}>Cancel</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+
             <Flex>
               <Spacer />
             </Flex>
