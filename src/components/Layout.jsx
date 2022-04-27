@@ -21,10 +21,10 @@ function Layout() {
     <div className="App">
       <header>
         <Header />
-        <Flex>
+        <Flex >
           {/* Only show this if logged in */}
           {isLoggedIn ? (
-        <SideBar/>
+        <SideBar />
         ):(
           <></>
         )}
