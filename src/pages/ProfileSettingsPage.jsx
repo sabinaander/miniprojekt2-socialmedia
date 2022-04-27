@@ -45,11 +45,11 @@ function ProfileSettingsPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    const getUser = async () => {
+    const fetchUser = async () => {
       const user = await getUser(authUser.username);
       setUser(user);
     };
-    getUser();
+    fetchUser();
   }, []);
 
   store.subscribe(async () => {
@@ -83,10 +83,10 @@ function ProfileSettingsPage() {
         duration: 4000,
         isClosable: true,
       });
-      setValue("password", "")
-      setEditModeEmail(false)
-      setEditModePassword(false)
-      setEditModeUsername(false)
+      setValue("password", "");
+      setEditModeEmail(false);
+      setEditModePassword(false);
+      setEditModeUsername(false);
     } catch (e) {
       console.log(e);
       setErrorMessage(e.response.data.message);
@@ -268,7 +268,11 @@ function ProfileSettingsPage() {
                 <ModalBody>Are you sure? This can't be reversed.</ModalBody>
 
                 <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={() => deleteuser(user.username)}>
+                  <Button
+                    colorScheme="blue"
+                    mr={3}
+                    onClick={() => deleteuser(user.username)}
+                  >
                     DELETE
                   </Button>
                   <Button variant="ghost" onClick={onClose}>
