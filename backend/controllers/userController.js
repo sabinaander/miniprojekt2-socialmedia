@@ -128,7 +128,23 @@ const getUser = asyncHandler(async (req, res) => {
 // delete user by username
 const deleteUser = asyncHandler(async (req, res) => {
 
+  // checks to see if cookie session id is existing
+  if(!req.session.id){
+    res.status(401);
+    res.send({ message: 'Unauthorized save attempt.' });
+    return;
+  }
+
   const username = req.params.username
+
+  // todo: maybe allow admins.   
+  //(now checks so the cookie name and localstorage name is same)
+  if(req.session.username !== username){
+    res.status(403);
+    res.send({ message: 'Not allowed to update other users.' });
+    return;
+  }
+  
   const user = await User.findOne({ username: username }).exec()
 
 
