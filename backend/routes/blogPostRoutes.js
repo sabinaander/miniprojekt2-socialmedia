@@ -6,9 +6,15 @@ const {
   editBlogPosts,
   addBlogPosts,
   deleteBlogPosts,
+  likePost,
 } = require('../controllers/blogPostController')
 
 router.route('/').get(getBlogPosts).post(addBlogPosts)
-router.route('/:id').get(getBlogPost).put(editBlogPosts).delete(deleteBlogPosts)
+router
+  .route('/:id')
+  .get(getBlogPost)
+  .patch(editBlogPosts)
+  .delete(deleteBlogPosts)
+router.patch('/:id/likePost', likePost)
 
 module.exports = router

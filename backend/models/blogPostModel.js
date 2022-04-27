@@ -11,7 +11,10 @@ const blogPostSchema = new mongoose.Schema(
       required: [true, 'Please add something'],
     },
     author: String,
-    // likes: Number,
+    likes: {
+      type: Number,
+      default: 0,
+    },
     imageUrl: String,
   },
   {

@@ -1,5 +1,8 @@
-const asyncHandler = require('express-async-handler');
-const Post = require('../models/blogPostModel');
+
+const asyncHandler = require('express-async-handler')
+const Post = require('../models/blogPostModel')
+const mongoose = require('mongoose')
+
 // const User = require('../models/userModel') //- to be implemented
 
 // @desc Get Blogposts
@@ -40,7 +43,7 @@ const addBlogPosts = asyncHandler(async (req, res) => {
   res.status(200).json(blog);
 });
 
-// @desc Get Blogposts
+// @desc Edit Blogposts
 // @route PUT /api/blogPosts/:id
 // @access Private
 const editBlogPosts = asyncHandler(async (req, res) => {
@@ -52,11 +55,12 @@ const editBlogPosts = asyncHandler(async (req, res) => {
   }
   const updatedBlog = await Post.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
-  });
-  res.status(200).json(updatedBlog);
-});
 
-// @desc Get Blogposts
+  })
+  res.status(200).json(updatedBlog)
+})
+// @desc Delete Blogposts
+
 // @route DELETE /api/blogPosts/:id
 // @access Private
 const deleteBlogPosts = asyncHandler(async (req, res) => {
@@ -71,10 +75,32 @@ const deleteBlogPosts = asyncHandler(async (req, res) => {
   res.status(200).json({ msg: `Deleted blogposts ${id}`, data: removedPost });
 });
 
+// @desc Add like to Blogposts
+// @route PATCH /api/blogPosts/:id
+// @access Public
+const likePost = asyncHandler(async (req, res) => {
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No post with id: ${id}`)
+
+  const post = await Post.findById(id)
+
+  const updatedPost = await Post.findByIdAndUpdate(
+    id,
+    { likes: post.likes + 1 },
+    { new: true }
+  )
+
+  res.json(updatedPost)
+})
+
 module.exports = {
   getBlogPosts,
   getBlogPost,
   addBlogPosts,
   editBlogPosts,
   deleteBlogPosts,
-};
+  likePost,
+}
+

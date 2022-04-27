@@ -1,13 +1,63 @@
-import { Box, Image, Link, Tooltip } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Image,
+  Link,
+  Tooltip,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
+import { useDisclosure } from '@chakra-ui/react'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { parseISO, formatDistanceToNow, format } from 'date-fns'
+import { useDispatch, useStore } from 'react-redux'
 import { Link as ReactLink } from 'react-router-dom'
+import { useState } from 'react'
+import {
+  likePost,
+  deletePost,
+  fetchPosts,
+} from '../features/blogPosts/postsSlice'
+import loginauthreducer from '../features/login-auth/reducers/loginauthreducer'
+import PostForm from './PostForm'
 
 function PostCard({ post }) {
+  const store = useStore(loginauthreducer)
+  const state = store.getState()
+  const [user, setUser] = useState(state.auth.user)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  store.subscribe(() => {
+    setUser(store.getState().auth.user)
+  })
+
   let timeAgo = ''
   const date = parseISO(post.createdAt)
   const timePeriod = formatDistanceToNow(date)
   timeAgo = `${timePeriod} ago`
+
+  const dispatch = useDispatch()
+
+  const postData = {
+    id: post._id,
+    title: post.title,
+    content: post.content,
+    imgUrl: post.imageUrl,
+  }
+
+  const onDelete = () => {
+    dispatch(deletePost(post._id))
+    dispatch(fetchPosts())
+    onClose()
+  }
+  const onlike = () => {
+    dispatch(likePost(post._id))
+    dispatch(fetchPosts())
+  }
 
   return (
     <Box
@@ -57,7 +107,7 @@ function PostCard({ post }) {
 
         <Box display="flex" mt="2" alignItems="center">
           <FavoriteIcon fontSize="medium" color="action" />
-          <Box as="span" ml="2" fontSize="sm">
+          <Box as="button" ml="2" fontSize="sm" onClick={onlike}>
             {post.likes} likes
           </Box>
         </Box>
@@ -72,6 +122,32 @@ function PostCard({ post }) {
         >
           Comment
         </Box>
+        {post.author === user.username && (
+          <>
+            <Button onClick={onOpen} bg="blue" color="white" px={4} h={8}>
+              Edit/Delete
+            </Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Edit or Delete Post</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <PostForm onClose={onClose} postData={postData} />
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button colorScheme="blue" mr={3} onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button variant="ghost" bg="red.500" onClick={onDelete}>
+                    Delete Post
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          </>
+        )}
       </Box>
     </Box>
   )
