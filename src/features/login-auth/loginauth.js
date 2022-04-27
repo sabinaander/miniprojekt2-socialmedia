@@ -3,7 +3,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  SET_MESSAGE
+  UPDATE_SUCCESS,
+  DELETE_SUCCESS
 } from './logintype'
 
 import loginauthservice from './loginauthservice'
@@ -26,11 +27,29 @@ export const register = async (username, email, password) => {
     ) || error.toString()
 
     store.dispatch({ type: REGISTER_FAIL })
-    store.dispatch({ type: SET_MESSAGE, payload: message })
     throw error
   }
 }
 
+export const update = async(username, newUserData) => {
+    const user = await loginauthservice.updateUser(username, newUserData)
+
+    store.dispatch({
+      type: UPDATE_SUCCESS,
+      payload: { user: user },
+    });
+    return user; 
+}
+
+export const deleteuser = async(username) => {
+  const user = await loginauthservice.deleteUser(username)
+
+  store.dispatch({
+    type: DELETE_SUCCESS,
+    payload: { user: user },
+  });
+  return user; 
+}
 
 
 export const login = async (email, password) => {
@@ -55,10 +74,6 @@ export const login = async (email, password) => {
       type: LOGIN_FAIL,
     });
 
-    store.dispatch({
-      type: SET_MESSAGE,
-      payload: message,
-    });
     throw error;
   }
 }
