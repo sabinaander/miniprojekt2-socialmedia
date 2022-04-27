@@ -14,7 +14,11 @@ import loginauthreducer from './features/login-auth/reducers/loginauthreducer';
 function App() {
   const store = useStore(loginauthreducer);
   const state = store.getState();
-  const [user] = useState(state.auth.user);
+  const [user, setUser] = useState(state.auth.user);
+
+  store.subscribe(() => {
+    setUser(store.getState().auth.user);
+  });
 
   return (
     <Routes>
@@ -22,7 +26,7 @@ function App() {
         <Route index element={<StartPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
-        {user.role === 'admin' ? (
+        {user?.role === 'admin' ? (
           <>
             <Route path="admin/users" element={<AdminPageUsers />} />
             <Route path="admin/posts" element={<AdminPagePosts />} />
