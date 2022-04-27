@@ -62,6 +62,9 @@ function AdminContent() {
                     key={index}
                     user={user}
                     roles={roles}
+                    removeUserFromState={() =>
+                      setUsers(users.filter((_, i) => index !== i))
+                    }
                     setError={setError}
                     displayError={onOpen}
                   />

@@ -237,7 +237,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
     if (
       user.role.name === 'admin' &&
-      req.body.role !== 'admin' &&
+      req.body.role !== adminRole._id.toString() &&
       admins.length === 1
     ) {
       res.status(406);
