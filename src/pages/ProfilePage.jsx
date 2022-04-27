@@ -1,5 +1,4 @@
 import { Divider, Container, Text } from "@chakra-ui/react";
-import UserControlHeader from "../components/UserControlHeader";
 import CreatePostModal from "../components/CreatePostModal";
 import ProfileBio from "../components/ProfileBio";
 import ProfileHeader from "../components/ProfileHeader";
@@ -37,7 +36,7 @@ function ProfilePage() {
   return (
     profileUser && (
       <Container bg="gray.100" maxW="container.xl" p="0px">
-        <UserControlHeader />
+        {/* <UserControlHeader /> */}
         <ProfileHeader authUser={authUser} profileUser={profileUser} isLoggedIn={isLoggedIn} />
         <ProfileBio authUser={authUser} profileUser={profileUser} isLoggedIn={isLoggedIn} />
         {!!isLoggedIn && profileUser.username === authUser.username && (
