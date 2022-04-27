@@ -16,7 +16,6 @@ import {
   Flex,
   Heading,
   Spacer,
-  toast,
   useToast,
   FormControl,
   Input,
@@ -46,11 +45,11 @@ function ProfileSettingsPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    const apa = async () => {
+    const getUser = async () => {
       const user = await getUser(authUser.username);
       setUser(user);
     };
-    apa();
+    getUser();
   }, []);
 
   store.subscribe(async () => {
