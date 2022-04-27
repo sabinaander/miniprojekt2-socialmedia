@@ -1,8 +1,5 @@
 import {
   Flex,
-  InputGroup,
-  InputLeftElement,
-  Input,
   Center,
   Heading,
   Spacer,
@@ -20,7 +17,6 @@ import {
 } from "@chakra-ui/react";
 
 import { Link } from "react-router-dom";
-import { SearchIcon } from "@chakra-ui/icons";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
@@ -58,13 +54,13 @@ function Header() {
             </Heading>
           </Link>
 
-          <InputGroup display={{ base: "none", md: "block" }}>
+          {/* <InputGroup display={{ base: "none", md: "block" }}>
             <InputLeftElement
               pointerEvents="none"
               children={<SearchIcon color="gray.300" />}
             />
             <Input placeholder="Search for posts..." />
-          </InputGroup>
+          </InputGroup> */}
         </Center>
 
         <Spacer />
