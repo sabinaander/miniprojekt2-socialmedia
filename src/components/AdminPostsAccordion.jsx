@@ -74,7 +74,8 @@ function AdminPostsAccordion(props) {
                         title: edited.title,
                         content: edited.content,
                         imageUrl: edited.imageUrl,
-                      }
+                      },
+                      { withCredentials: true }
                     )
                     .then((res) => console.log('Hej'));
                 }}
@@ -98,7 +99,8 @@ function AdminPostsAccordion(props) {
                         axios
                           .delete(
                             'http://localhost:5000/api/blogPosts/' +
-                              props.post._id
+                              props.post._id,
+                            { withCredentials: true }
                           )
                           .then((res) => console.log(res.data))
                           .finally(() => onClose())

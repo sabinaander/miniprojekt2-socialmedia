@@ -46,7 +46,12 @@ function AdminUserDetails(props) {
           rightIcon={<DeleteIcon />}
           onClick={() =>
             axios
-              .delete('http://localhost:5000/api/users/' + props.user._id)
+              .delete(
+                'http://localhost:5000/api/users/' + props.user.username,
+                {
+                  withCredentials: true,
+                }
+              )
               .then((res) => console.log(res.data))
           }
         >

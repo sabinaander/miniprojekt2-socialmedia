@@ -152,6 +152,23 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 
 // delete user by username
 const deleteUser = asyncHandler(async (req, res) => {
+  // checks to see if cookie session id is existing
+  if (!req.session.id) {
+    res.status(401);
+    res.send({ message: 'Unauthorized save attempt.' });
+    return;
+  }
+
+  //(now checks so the cookie name and localstorage name is same)
+  if (
+    req.session.role.name !== 'admin' &&
+    req.session.username !== req.params.username
+  ) {
+    res.status(403);
+    res.send({ message: 'You are not allowed to delete other users.' });
+    return;
+  }
+
   const username = req.params.username;
   const user = await User.findOne({ username: username }).exec();
 
@@ -208,7 +225,12 @@ const updateUser = asyncHandler(async (req, res) => {
   if (req.body.avatar) user.avatar = req.body.avatar;
   if (req.body.backgroundimage) user.backgroundimage = req.body.backgroundimage;
   if (req.body.email) user.email = req.body.email;
-  if (req.body.username) user.username = req.body.username;
+  if (req.body.username) {
+    if (req.session.username === req.params.username) {
+      req.session.username = req.body.username;
+    }
+    user.username = req.body.username;
+  }
   if (req.body.password) {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -223,19 +245,37 @@ const updateUser = asyncHandler(async (req, res) => {
 
 // Get all users
 const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find().populate('role');
+  if (req.session.role.name !== 'admin') {
+    res.status(403);
+    res.send({ message: 'You do not have access to this function' });
+    return;
+  }
 
+  const users = await User.find().populate('role');
   if (!users) {
     res.send({ message: 'No users can be found.' });
     return;
   }
 
-  res.json(users);
+  res.json(
+    users.map((user) => {
+      return {
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      };
+    })
+  );
 });
 
 const getRoles = asyncHandler(async (req, res) => {
-  const roles = await Role.find();
+  if (req.session.role.name !== 'admin') {
+    res.status(403);
+    res.send({ message: 'You do not have access to this function' });
+    return;
+  }
 
+  const roles = await Role.find();
   if (!roles) {
     res.send({ message: 'No roles can be found.' });
     return;
