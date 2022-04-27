@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const User = require('./backend/models/userModel');
+const Post = require('./backend/models/blogPostModel');
 const Role = require('./backend/models/roleModel');
 
 const connectionString = 'mongodb://localhost:27017/socialmedia';
@@ -10,6 +11,10 @@ async function main() {
 
   try {
     await User.collection.drop();
+  } catch {}
+
+  try {
+    await Post.collection.drop();
   } catch {}
 
   try {
