@@ -21,8 +21,12 @@ function AdminContent() {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    axios.get(API_URL_GET_USERS).then((res) => setUsers(res.data));
-    axios.get(API_URL_GET_ROLES).then((res) => setRoles(res.data));
+    axios
+      .get(API_URL_GET_USERS, { withCredentials: true })
+      .then((res) => setUsers(res.data));
+    axios
+      .get(API_URL_GET_ROLES, { withCredentials: true })
+      .then((res) => setRoles(res.data));
   }, []);
 
   return (
