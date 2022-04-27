@@ -1,6 +1,6 @@
-import { Tr, Td, Button, Select } from '@chakra-ui/react';
 import { useState } from 'react';
 import axios from 'axios';
+import { Button, Select, Tr, Td } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -28,7 +28,7 @@ function AdminUserDetails(props) {
         <Button
           margin="0 1rem"
           rightIcon={<SaveIcon />}
-          onClick={() => {
+          onClick={() =>
             axios
               .put(
                 'http://localhost:5000/api/users/' + props.user.username,
@@ -37,8 +37,12 @@ function AdminUserDetails(props) {
                 },
                 { withCredentials: true }
               )
-              .then((res) => console.log('role saved'));
-          }}
+              .then((res) => console.log('role saved'))
+              .catch((error) => {
+                props.setError(error.response.data.message);
+                props.displayError();
+              })
+          }
         >
           Save
         </Button>
@@ -53,6 +57,10 @@ function AdminUserDetails(props) {
                 }
               )
               .then((res) => console.log(res.data))
+              .catch((error) => {
+                props.setError(error.response.data?.message);
+                props.displayError();
+              })
           }
         >
           Delete
