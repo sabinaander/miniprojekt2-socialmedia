@@ -122,7 +122,7 @@ function PostCard({ post }) {
         >
           Comment
         </Box>
-        {post.author === user.username && (
+        {post.author === user?.username && (
           <>
             <Button onClick={onOpen} bg="blue" color="white" px={4} h={8}>
               Edit/Delete

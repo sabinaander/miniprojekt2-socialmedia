@@ -66,12 +66,18 @@ function ProfileBio(props) {
 
   return (
     props.profileUser && (
-      <Container mt='20vh' align="center" maxW="60%" padding={2} borderColor="gray.200">
+      <Container
+        mt="20vh"
+        align="center"
+        maxW="60%"
+        padding={2}
+        borderColor="gray.200"
+      >
         <Box>
           <Center>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Text fontWeight="bold" mb={5}>
-                <Center>
+              <Center>
+                <Text fontWeight="bold" mb={5}>
                   About {props.profileUser.username}
                   {!!props.isLoggedIn &&
                     props.profileUser.username === props.authUser.username && (
@@ -84,8 +90,8 @@ function ProfileBio(props) {
                       />
                       // <Text>Add some text about yourself</Text>
                     )}
-                </Center>
-              </Text>
+                </Text>
+              </Center>
               <Text mb={5}>{props.profileUser.bio}</Text>
               {/* EDIT BIO */}
 
