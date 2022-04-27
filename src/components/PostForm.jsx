@@ -12,11 +12,10 @@ import {
   VStack,
   useToast,
 } from '@chakra-ui/react'
-import { addNewPost } from '../features/blogPosts/postsSlice'
-import { useNavigate } from 'react-router-dom'
+import { addNewPost, editPost } from '../features/blogPosts/postsSlice'
 import loginauthreducer from '../features/login-auth/reducers/loginauthreducer'
 
-function PostForm({ onClose }) {
+function PostForm({ onClose, postData }) {
   const store = useStore(loginauthreducer)
   const state = store.getState()
   const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn)
@@ -33,32 +32,45 @@ function PostForm({ onClose }) {
     formState: { isSubmitting },
   } = useForm()
 
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const toast = useToast()
 
   const onSubmit = (data) => {
-    if (data && isLoggedIn) {
-      dispatch(
-        addNewPost({
-          title: data.title,
-          content: data.content,
-          imageUrl: data.imageUrl,
-          author: user.username,
+    try {
+      if (data && isLoggedIn && !postData) {
+        dispatch(
+          addNewPost({
+            title: data.title,
+            content: data.content,
+            imageUrl: data.imageUrl,
+            author: user.username,
+          })
+        )
+        onClose()
+        toast({
+          title: 'Submitted!',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
         })
-      )
-      onClose()
-      toast({
-        title: 'Submitted!',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      })
-      navigate('/')
+        console.log('add was used', data)
+      } else {
+        dispatch(
+          editPost({
+            id: postData.id,
+            title: data.title,
+            content: data.content,
+            imageUrl: data.imageUrl,
+          })
+        )
+        onClose()
+        console.log(data)
+      }
+      // reset(data) // - not working, needs investigating
+    } catch (error) {
+      console.error(error)
     }
-    // reset(data) // - not working, needs investigating
   }
-
   return (
     <Flex align="center" justify="center">
       <Box bg="white" p={6} rounded="md">
@@ -73,7 +85,9 @@ function PostForm({ onClose }) {
                   size="lg"
                   variant="filled"
                   errorBorderColor="red.300"
-                  {...register('imageUrl')}
+                  {...register('imageUrl', {
+                    value: postData?.imgUrl,
+                  })}
                 />
                 <Input
                   id="title"
@@ -84,6 +98,7 @@ function PostForm({ onClose }) {
                   errorBorderColor="red.300"
                   {...register('title', {
                     required: 'This is required',
+                    value: postData?.title,
                   })}
                 />
                 <Textarea
@@ -94,6 +109,7 @@ function PostForm({ onClose }) {
                   errorBorderColor="red.300"
                   {...register('content', {
                     required: 'This is required',
+                    value: postData?.content,
                   })}
                 />
               </Stack>
@@ -104,7 +120,7 @@ function PostForm({ onClose }) {
               colorScheme="purple"
               isFullWidth
             >
-              Add post
+              {postData ? 'Update post' : 'Add post'}
             </Button>
           </VStack>
         </form>
