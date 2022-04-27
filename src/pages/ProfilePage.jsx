@@ -36,7 +36,7 @@ function ProfilePage() {
 
   return (
     profileUser && (
-      <Container bg="gray.100" maxW="container.xl">
+      <Container bg="gray.100" maxW="container.xl" p="0px">
         <UserControlHeader />
         <ProfileHeader authUser={authUser} profileUser={profileUser} isLoggedIn={isLoggedIn} />
         <ProfileBio authUser={authUser} profileUser={profileUser} isLoggedIn={isLoggedIn} />
