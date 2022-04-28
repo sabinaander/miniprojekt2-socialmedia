@@ -58,31 +58,36 @@ function Header() {
             </Heading>
           </Link>
 
-          <InputGroup display={{ base: "none", md: "block" }}>
+          {/* <InputGroup display={{ base: "none", md: "block" }}>
             <InputLeftElement
               pointerEvents="none"
               children={<SearchIcon color="gray.300" />}
             />
             <Input placeholder="Search for posts..." />
-          </InputGroup>
+          </InputGroup> */}
         </Center>
 
         <Spacer />
         <Center>
           <Flex gap={6}>
-            <Button
-              display={{ base: "block", md: "none" }}
-              onClick={loginModal.onOpen}
-            >
-              <PersonOutlineIcon fontSize="medium" color="action" />
-            </Button>
-
+            {
+              !isLoggedIn && (
+                <Button
+                  display={{ base: "block", md: "none" }}
+                  onClick={loginModal.onOpen}
+                >
+                  <PersonOutlineIcon fontSize="medium" color="action" />
+                </Button>
+              )
+            }
             {/* USER IS LOGGED IN */}
             {isLoggedIn ? (
               <>
-                <Center>
-                  <Text fontSize="lg" mr={2}>welcome in </Text>
-                  <Text fontSize="lg" fontWeight="bold">{user.username}</Text>
+                <Center >
+                  <Text fontSize="lg" mr={2} display={{ base: "none", md: "flex" }}>welcome in </Text>
+                  <Text fontSize="lg" fontWeight="bold" display={{ base: "none", sm: "flex" }}>
+                    {user.username}
+                  </Text>
                 </Center>
                 <Button
                   onClick={logout}

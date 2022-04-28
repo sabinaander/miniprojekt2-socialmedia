@@ -169,13 +169,24 @@ const deleteUser = asyncHandler(async (req, res) => {
     return;
   }
 
-  const username = req.params.username;
-  const user = await User.findOne({ username: username })
+
+  // checks to see if cookie session id is existing
+  if(!req.session.id){
+    res.status(401);
+    res.send({ message: 'Unauthorized save attempt.' });
+    return;
+  }
+
+  const username = req.params.username
+    const user = await User.findOne({ username: username })
     .populate('role')
     .exec();
 
+
+
   const adminRole = await Role.findOne({ name: 'admin' }).exec();
   const admins = await User.find({ role: adminRole }).exec();
+
 
   if (user.role.name === 'admin' && admins.length === 1) {
     res.status(406);
@@ -195,6 +206,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 // update user, right now you can only update a users role
 const updateUser = asyncHandler(async (req, res) => {
+
   // checks to see if cookie session id is existing
   if (!req.session.id) {
     res.status(401);
@@ -212,9 +224,11 @@ const updateUser = asyncHandler(async (req, res) => {
     return;
   }
 
+
   const user = await User.findOne({ username: req.params.username })
     .populate('role')
     .exec();
+
 
   if (!user) {
     res.status(400);
@@ -258,6 +272,7 @@ const updateUser = asyncHandler(async (req, res) => {
     }
     user.username = req.body.username;
   }
+
   if (req.body.password) {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);

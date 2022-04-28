@@ -1,5 +1,5 @@
-import { Divider, Container, Text } from "@chakra-ui/react";
-import UserControlHeader from "../components/UserControlHeader";
+import { Divider, Container, Text, Box } from "@chakra-ui/react";
+// import UserControlHeader from "../components/UserControlHeader";
 import CreatePostModal from "../components/CreatePostModal";
 import ProfileBio from "../components/ProfileBio";
 import ProfileHeader from "../components/ProfileHeader";
@@ -32,25 +32,35 @@ function ProfilePage() {
 
   useEffect(() => {
     loadUser();
-  },[]);
+  }, []);
 
   return (
     profileUser && (
-      <Container bg="gray.100" maxW="container.xl" p="0px">
-        <UserControlHeader />
-        <ProfileHeader authUser={authUser} profileUser={profileUser} isLoggedIn={isLoggedIn} />
-        <ProfileBio authUser={authUser} profileUser={profileUser} isLoggedIn={isLoggedIn} />
+      <Box bg="gray.100" w="100%">
+        <ProfileHeader
+          authUser={authUser}
+          profileUser={profileUser}
+          isLoggedIn={isLoggedIn}
+          loadUser={loadUser}
+        />
+        <ProfileBio
+          authUser={authUser}
+          profileUser={profileUser}
+          isLoggedIn={isLoggedIn}
+          loadUser={loadUser}
+        />
         {!!isLoggedIn && profileUser.username === authUser.username && (
-          <CreatePostModal user={profileUser}/>
+          <CreatePostModal user={profileUser} />
         )}
 
         <Divider />
         <Text align="center" fontSize="4xl">
-          Posts by{' '}
-          {profileUser.username}
+          Posts by {profileUser.username}
         </Text>
-        <PostsList author={profileUser.username} />
-      </Container>
+        <Box p={5}>
+          <PostsList author={profileUser.username} />
+        </Box>
+      </Box>
     )
   );
 }
