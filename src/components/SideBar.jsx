@@ -1,12 +1,11 @@
-
-import { Flex, Text, Box } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import HomeIcon from "@mui/icons-material/Home";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import { Flex, Text, Box } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { useStore } from "react-redux";
-import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
-import { useState } from "react";
+import { useStore } from 'react-redux';
+import loginauthreducer from '../features/login-auth/reducers/loginauthreducer';
+import { useState } from 'react';
 
 function SideBar() {
   const store = useStore(loginauthreducer);
@@ -20,8 +19,16 @@ function SideBar() {
   });
 
   return (
-    <Box margin="0px" padding="0px" id="a" w="max-content" mt={10} pl={5} pr={5}>
-      <Flex direction="column" >
+    <Box
+      margin="0px"
+      padding="0px"
+      id="a"
+      w="max-content"
+      mt={10}
+      pl={5}
+      pr={5}
+    >
+      <Flex direction="column">
         <Link to="/">
           <Flex gap="1rem" mb={5}>
             <HomeIcon fontSize="medium" color="action" />
@@ -68,7 +75,7 @@ function SideBar() {
         {user.role === 'admin' ? (
           <>
             <Link to="/admin/users">
-              <Flex gap="2rem" mb={5}>
+              <Flex gap="1rem" mb={5}>
                 <SettingsIcon fontSize="medium" color="action" />
                 <Text fontSize="lg" display={{ base: 'none', md: 'block' }}>
                   Administer Users
@@ -76,7 +83,7 @@ function SideBar() {
               </Flex>
             </Link>
             <Link to="/admin/posts">
-              <Flex gap="2rem" mb={5}>
+              <Flex gap="1rem" mb={5}>
                 <SettingsIcon fontSize="medium" color="action" />
                 <Text fontSize="lg" display={{ base: 'none', md: 'block' }}>
                   Administer Posts
