@@ -1,13 +1,13 @@
-import { Flex, Container, Text, useRadio } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import HomeIcon from "@mui/icons-material/Home";
-import TagIcon from "@mui/icons-material/Tag";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import { SettingsIcon } from "@chakra-ui/icons";
-import { useStore } from "react-redux";
-import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
-import { useState } from "react";
+import { Flex, Container, Text } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
+import TagIcon from '@mui/icons-material/Tag';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import { SettingsIcon } from '@chakra-ui/icons';
+import { useStore } from 'react-redux';
+import loginauthreducer from '../features/login-auth/reducers/loginauthreducer';
+import { useState } from 'react';
 
 function SideBar() {
   const store = useStore(loginauthreducer);
@@ -26,7 +26,7 @@ function SideBar() {
         <Link to="/">
           <Flex gap="2rem" mb={5}>
             <HomeIcon fontSize="medium" color="action" />
-            <Text fontSize="lg" display={{ base: "none", md: "block" }}>
+            <Text fontSize="lg" display={{ base: 'none', md: 'block' }}>
               Home
             </Text>
           </Flex>
@@ -35,7 +35,7 @@ function SideBar() {
         <Link to="/explore">
           <Flex gap="2rem" mb={5}>
             <TagIcon fontSize="medium" color="action" />
-            <Text fontSize="lg" display={{ base: "none", md: "block" }}>
+            <Text fontSize="lg" display={{ base: 'none', md: 'block' }}>
               Explore
             </Text>
           </Flex>
@@ -44,7 +44,7 @@ function SideBar() {
         <Link to="/notifications">
           <Flex gap="2rem" mb={5}>
             <NotificationsNoneIcon fontSize="medium" color="action" />
-            <Text fontSize="lg" display={{ base: "none", md: "block" }}>
+            <Text fontSize="lg" display={{ base: 'none', md: 'block' }}>
               Notifications
             </Text>
           </Flex>
@@ -53,7 +53,7 @@ function SideBar() {
         <Link to={`/profile/${user.username}`}>
           <Flex gap="2rem" mb={5}>
             <PersonOutlineIcon fontSize="medium" color="action" />
-            <Text fontSize="lg" display={{ base: "none", md: "block" }}>
+            <Text fontSize="lg" display={{ base: 'none', md: 'block' }}>
               Profile
             </Text>
           </Flex>
@@ -61,11 +61,31 @@ function SideBar() {
         <Link to="/settings">
           <Flex gap="2rem" mb={5}>
             <SettingsIcon fontSize="medium" color="action" />
-            <Text fontSize="lg" display={{ base: "none", md: "block" }}>
+            <Text fontSize="lg" display={{ base: 'none', md: 'block' }}>
               Settings
             </Text>
           </Flex>
         </Link>
+        {user.role === 'admin' ? (
+          <>
+            <Link to="/admin/users">
+              <Flex gap="2rem" mb={5}>
+                <SettingsIcon fontSize="medium" color="action" />
+                <Text fontSize="lg" display={{ base: 'none', md: 'block' }}>
+                  Administer Users
+                </Text>
+              </Flex>
+            </Link>
+            <Link to="/admin/posts">
+              <Flex gap="2rem" mb={5}>
+                <SettingsIcon fontSize="medium" color="action" />
+                <Text fontSize="lg" display={{ base: 'none', md: 'block' }}>
+                  Administer Posts
+                </Text>
+              </Flex>
+            </Link>
+          </>
+        ) : null}
       </Flex>
     </Container>
   );

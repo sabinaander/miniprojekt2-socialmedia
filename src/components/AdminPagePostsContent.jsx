@@ -1,25 +1,30 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Box, Flex, Heading, Spinner, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { Accordion, Box, Flex, Heading, Spinner, Text } from '@chakra-ui/react';
 import AdminPostsAccordion from './AdminPostsAccordion';
 import {
+  deletePost,
   fetchPosts,
-  selectAllPosts,
   getPostsStatus,
   getPostsError,
+  selectAllPosts,
 } from '../features/blogPosts/postsSlice';
 
 function AdminPagePostsContent() {
   const dispatch = useDispatch();
-  const posts = useSelector(selectAllPosts);
-  const postStatus = useSelector(getPostsStatus);
-  const error = useSelector(getPostsError);
+  const posts = useSelector(selectAllPosts, shallowEqual);
+  const postStatus = useSelector(getPostsStatus, shallowEqual);
+  const error = useSelector(getPostsError, shallowEqual);
+  const [accordionIndex, setAccordionIndex] = useState(null);
 
   useEffect(() => {
-    if (postStatus === 'idle') {
-      dispatch(fetchPosts());
-    }
-  }, [postStatus, dispatch]);
+    dispatch(fetchPosts());
+  }, []);
+
+  const deleteBlogPost = (id) => {
+    dispatch(deletePost(id));
+    setAccordionIndex(null);
+  };
 
   let content;
   if (postStatus === 'loading') {
@@ -33,16 +38,26 @@ function AdminPagePostsContent() {
       />
     );
   } else if (postStatus === 'succeeded') {
-    content = posts.map((post, index) => (
-      <AdminPostsAccordion
-        key={index}
-        post={post}
-        title={post.title}
-        image={post.image}
-        content={post.content}
-        author={post.author}
-      />
-    ));
+    content = (
+      <Accordion
+        index={accordionIndex}
+        onChange={(i) => setAccordionIndex(i)}
+        allowToggle
+        margin="0.5rem 0"
+      >
+        {posts.map((post, index) => (
+          <AdminPostsAccordion
+            key={index}
+            post={post}
+            title={post.title}
+            image={post.image}
+            content={post.content}
+            author={post.author}
+            deletePost={() => deleteBlogPost(post._id)}
+          />
+        ))}
+      </Accordion>
+    );
   } else if (postStatus === 'failed') {
     content = <Text>{error}</Text>;
   }
