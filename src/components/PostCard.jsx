@@ -11,53 +11,51 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-} from '@chakra-ui/react'
-import { useDisclosure } from '@chakra-ui/react'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import { parseISO, formatDistanceToNow, format } from 'date-fns'
-import { useDispatch, useStore } from 'react-redux'
-import { Link as ReactLink } from 'react-router-dom'
-import { useState } from 'react'
+} from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { parseISO, formatDistanceToNow, format } from 'date-fns';
+import { useDispatch, useStore } from 'react-redux';
+import { Link as ReactLink } from 'react-router-dom';
+import { useState } from 'react';
 import {
   likePost,
   deletePost,
   fetchPosts,
-} from '../features/blogPosts/postsSlice'
-import loginauthreducer from '../features/login-auth/reducers/loginauthreducer'
-import PostForm from './PostForm'
+} from '../features/blogPosts/postsSlice';
+import loginauthreducer from '../features/login-auth/reducers/loginauthreducer';
+import PostForm from './PostForm';
 
 function PostCard({ post }) {
-  const store = useStore(loginauthreducer)
-  const state = store.getState()
-  const [user, setUser] = useState(state.auth.user)
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const store = useStore(loginauthreducer);
+  const state = store.getState();
+  const [user, setUser] = useState(state.auth.user);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   store.subscribe(() => {
-    setUser(store.getState().auth.user)
-  })
+    setUser(store.getState().auth.user);
+  });
 
-  let timeAgo = ''
-  const date = parseISO(post.createdAt)
-  const timePeriod = formatDistanceToNow(date)
-  timeAgo = `${timePeriod} ago`
+  let timeAgo = '';
+  const date = parseISO(post.createdAt);
+  const timePeriod = formatDistanceToNow(date);
+  timeAgo = `${timePeriod} ago`;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const postData = {
     id: post._id,
     title: post.title,
     content: post.content,
     imgUrl: post.imageUrl,
-  }
+  };
 
   const onDelete = () => {
-    dispatch(deletePost(post._id))
-    dispatch(fetchPosts())
-    onClose()
-  }
+    dispatch(deletePost(post._id));
+    onClose();
+  };
   const onlike = () => {
-    dispatch(likePost(post._id))
-    dispatch(fetchPosts())
-  }
+    dispatch(likePost(post._id));
+  };
 
   return (
     <Box
@@ -128,6 +126,8 @@ function PostCard({ post }) {
         >
           Comment
         </Box> */}
+
+
         {post.author === user?.username && (
           <>
             <Button onClick={onOpen} bg="blue" color="white" px={4} h={8}>
@@ -156,7 +156,7 @@ function PostCard({ post }) {
         )}
       </Box>
     </Box>
-  )
+  );
 }
 
-export default PostCard
+export default PostCard;
