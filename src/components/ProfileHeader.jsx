@@ -55,8 +55,8 @@ function ProfileHeader(props) {
         duration: 4000,
         isClosable: true,
       });
-      avatarDisclosure.onClose();
       backgroundDisclosure.onClose();
+      avatarDisclosure.onClose();
 
       props.loadUser(props.profileUser.username);
     } catch (e) {
