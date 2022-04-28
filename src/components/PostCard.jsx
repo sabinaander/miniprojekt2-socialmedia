@@ -118,7 +118,7 @@ function PostCard({ post }) {
           </Box>
         </Box>
 
-        <Box
+        {/* <Box
           as="button"
           borderRadius="md"
           bg="black"
@@ -127,7 +127,7 @@ function PostCard({ post }) {
           h={8}
         >
           Comment
-        </Box>
+        </Box> */}
         {post.author === user?.username && (
           <>
             <Button onClick={onOpen} bg="blue" color="white" px={4} h={8}>
