@@ -31,9 +31,6 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 function ProfileBio(props) {
-  const [EditModeBio, setEditModeBio] = useState(false);
-  const [editModeWebsite, setEditModeWebsite] = useState(false);
-
   const toast = useToast();
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -66,7 +63,9 @@ function ProfileBio(props) {
       });
       bioDisclosure.onClose();
       websiteDisclosure.onClose();
+
       props.loadUser(props.profileUser.username);
+      
     } catch (e) {
       console.log(e);
       setErrorMessage(e.response.data.message);
@@ -117,12 +116,13 @@ function ProfileBio(props) {
               >
                 <ModalOverlay />
                 <ModalContent>
-                  <ModalHeader>Edit background image</ModalHeader>
+                  <ModalHeader>Edit your bio</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody pb={6}>
                     <Center gap="1rem" mb={2}>
                       <FormControl>
                         <Input
+                        height="10rem"
                           {...register("bio", {
                             value: props.profileUser.bio,
                           })}
@@ -220,7 +220,7 @@ function ProfileBio(props) {
                   >
                     <ModalOverlay />
                     <ModalContent>
-                      <ModalHeader>Edit background image</ModalHeader>
+                      <ModalHeader>Edit website links</ModalHeader>
                       <ModalCloseButton />
                       <ModalBody pb={6}>
                         <Center gap="1rem" mb={2}>
