@@ -105,9 +105,15 @@ function PostCard({ post }) {
           <Box as="span" color="gray.600" fontSize="sm"></Box>
         </Box>
 
-        <Box display="flex" mt="2" alignItems="center">
+        <Box
+          display="flex"
+          mt="2"
+          alignItems="center"
+          as="button"
+          onClick={onlike}
+        >
           <FavoriteIcon fontSize="medium" color="action" />
-          <Box as="button" ml="2" fontSize="sm" onClick={onlike}>
+          <Box ml="2" fontSize="sm">
             {post.likes} likes
           </Box>
         </Box>
