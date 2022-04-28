@@ -38,7 +38,7 @@ function StartPage() {
       )}
       <Divider />
       <Text align="center" fontSize="4xl">
-        Popular posts
+        Most recent posts
       </Text>
 
       <PostsList />
