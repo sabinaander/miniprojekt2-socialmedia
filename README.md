@@ -1,5 +1,5 @@
 # Socialmblr
----
+
 A social media app created in the course of dynamic web development.
 
 School: Medieinsitutet Gothenburg
@@ -18,7 +18,7 @@ Olivia Isberg
 Sabina Andersson
 
 ## About
----
+
 This app is built with React, JS for front-end and Mongodb + Mongoose for back-end.
 
 ### Features:
@@ -38,7 +38,7 @@ This app is built with React, JS for front-end and Mongodb + Mongoose for back-e
 
 
 ## Available Scripts
----
+
 In the project directory, you can run:
 
 ### `npm i`
