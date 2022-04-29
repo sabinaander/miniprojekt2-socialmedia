@@ -18,15 +18,15 @@ import {
   ModalFooter,
   Modal,
   Tooltip,
-} from "@chakra-ui/react";
-import { EditIcon } from "@chakra-ui/icons";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { update } from "../features/login-auth/loginauth";
+} from '@chakra-ui/react';
+import { EditIcon } from '@chakra-ui/icons';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { update } from '../features/login-auth/loginauth';
 
 function ProfileHeader(props) {
   const toast = useToast();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const backgroundDisclosure = useDisclosure();
   const avatarDisclosure = useDisclosure();
@@ -40,7 +40,7 @@ function ProfileHeader(props) {
   } = useForm();
 
   const onSubmit = async () => {
-    setErrorMessage("");
+    setErrorMessage('');
     const newValues = getValues();
 
     try {
@@ -49,9 +49,9 @@ function ProfileHeader(props) {
         ...newValues,
       });
       toast({
-        title: "Edit successful!",
-        description: "",
-        status: "success",
+        title: 'Edit successful!',
+        description: '',
+        status: 'success',
         duration: 4000,
         isClosable: true,
       });
@@ -91,7 +91,7 @@ function ProfileHeader(props) {
                   >
                     <EditIcon
                       d="none"
-                      _groupHover={{ display: "inline" }}
+                      _groupHover={{ display: 'inline' }}
                       color="white"
                       float="right"
                       cursor="pointer"
@@ -118,8 +118,7 @@ function ProfileHeader(props) {
                   <Center gap="1rem" mb={2}>
                     <FormControl>
                       <Input
-                        {...register("backgroundimage", {
-                          required: true,
+                        {...register('backgroundimage', {
                           value: props.profileUser.backgroundimage,
                         })}
                       />
@@ -159,7 +158,7 @@ function ProfileHeader(props) {
                     >
                       <EditIcon
                         d="none"
-                        _groupHover={{ display: "inline" }}
+                        _groupHover={{ display: 'inline' }}
                         position="absolute"
                         left="40%"
                         color="white"
@@ -189,8 +188,7 @@ function ProfileHeader(props) {
                   <Center gap="1rem" mb={2}>
                     <FormControl>
                       <Input
-                        {...register("avatar", {
-                          required: true,
+                        {...register('avatar', {
                           value: props.profileUser.avatar,
                         })}
                       />
