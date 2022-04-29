@@ -19,7 +19,7 @@ Sabina Andersson
 
 ## About
 
-This app is built with React, JS for front-end and Mongodb + Mongoose for back-end.
+This app is built with React, JavaScript and Chakra UI for front-end and Mongodb + Mongoose for back-end.
 
 ### Features:
 - Register account.
