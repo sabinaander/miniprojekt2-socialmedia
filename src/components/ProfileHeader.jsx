@@ -6,6 +6,7 @@ import {
   Flex,
   Heading,
   Spacer,
+  toast,
   useToast,
   FormControl,
   Input,
@@ -32,6 +33,7 @@ function ProfileHeader(props) {
   const avatarDisclosure = useDisclosure();
 
   const { register, handleSubmit, getValues } = useForm();
+
 
   const onSubmit = async () => {
     setErrorMessage('');

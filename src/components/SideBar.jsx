@@ -11,6 +11,7 @@ function SideBar() {
   const store = useStore(loginauthreducer);
   const state = store.getState();
   const [setIsLoggedIn] = useState(state.auth.isLoggedIn);
+
   const [user, setUser] = useState(state.auth.user);
 
   store.subscribe(() => {

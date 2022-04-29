@@ -32,7 +32,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 function ProfileBio(props) {
   const toast = useToast();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [_, setErrorMessage] = useState("");
 
   const bioDisclosure = useDisclosure();
   const websiteDisclosure = useDisclosure();
@@ -41,8 +41,6 @@ function ProfileBio(props) {
     register,
     handleSubmit,
     getValues,
-    setValue,
-    formState: { isSubmitting },
   } = useForm();
 
   const onSubmit = async () => {

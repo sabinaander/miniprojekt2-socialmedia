@@ -28,7 +28,6 @@ function PostForm({ onClose, postData }) {
   const {
     handleSubmit,
     register,
-    // reset,
     formState: { isSubmitting },
   } = useForm()
 
