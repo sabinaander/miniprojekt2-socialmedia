@@ -45,8 +45,7 @@ In the project directory, you can run:
 
 installs all dependencies needed for this project.
 
-### `npm run pupulate-database`
-adds a admin user.
+Also populates db with an admin user.
 
 to log in:
 

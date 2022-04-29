@@ -43,6 +43,7 @@
     "start-front": "react-scripts start",
     "server-test": "nodemon backend/server.js",
     "populate-database": "node prepopulateDb.js",
+    "postinstall": "node prepopulateDb.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
