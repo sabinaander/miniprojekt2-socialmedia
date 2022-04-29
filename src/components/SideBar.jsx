@@ -10,7 +10,7 @@ import { useState } from 'react';
 function SideBar() {
   const store = useStore(loginauthreducer);
   const state = store.getState();
-  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
+  const [setIsLoggedIn] = useState(state.auth.isLoggedIn);
   const [user, setUser] = useState(state.auth.user);
 
   store.subscribe(() => {

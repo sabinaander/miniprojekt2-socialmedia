@@ -26,25 +26,19 @@ import { update } from '../features/login-auth/loginauth';
 
 function ProfileHeader(props) {
   const toast = useToast();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [setErrorMessage] = useState('');
 
   const backgroundDisclosure = useDisclosure();
   const avatarDisclosure = useDisclosure();
 
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    setValue,
-    formState: { isSubmitting },
-  } = useForm();
+  const { register, handleSubmit, getValues } = useForm();
 
   const onSubmit = async () => {
     setErrorMessage('');
     const newValues = getValues();
 
     try {
-      const updateUser = await update(props.profileUser.username, {
+      await update(props.profileUser.username, {
         ...props.profileUser,
         ...newValues,
       });

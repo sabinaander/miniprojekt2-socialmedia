@@ -31,7 +31,7 @@ const login = async (email, password) => {
 };
 
 // get users
-export const getUser = async (username) => {
+const getUser = async (username) => {
   const response = await axios.get(API_URL + `${username}`);
   return response.data;
 };
@@ -42,6 +42,13 @@ const updateUser = async (username, newUserData) => {
   });
 
   localStorage.setItem('user', JSON.stringify(response.data));
+  return response.data;
+};
+
+const updateUserFromAdmin = async (username, newUserData) => {
+  const response = await axios.put(API_URL + `${username}`, newUserData, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
@@ -68,4 +75,12 @@ const logout = async () => {
   return response;
 };
 
-export default { register, login, logout, getUser, updateUser, deleteUser };
+export default {
+  register,
+  login,
+  logout,
+  getUser,
+  updateUser,
+  deleteUser,
+  updateUserFromAdmin,
+};
