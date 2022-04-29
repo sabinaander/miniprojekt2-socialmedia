@@ -26,24 +26,21 @@ import { useState } from 'react';
 import { update } from '../features/login-auth/loginauth';
 
 function ProfileHeader(props) {
-  const [_, setErrorMessage] = useState("");
-
+  const toast = useToast();
+  const [setErrorMessage] = useState('');
 
   const backgroundDisclosure = useDisclosure();
   const avatarDisclosure = useDisclosure();
 
-  const {
-    register,
-    handleSubmit,
-    getValues,
-  } = useForm();
+  const { register, handleSubmit, getValues } = useForm();
+
 
   const onSubmit = async () => {
     setErrorMessage('');
     const newValues = getValues();
 
     try {
-      const updateUser = await update(props.profileUser.username, {
+      await update(props.profileUser.username, {
         ...props.profileUser,
         ...newValues,
       });

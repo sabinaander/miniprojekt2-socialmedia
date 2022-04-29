@@ -1,4 +1,4 @@
-import { CloseIcon, EditIcon } from '@chakra-ui/icons'
+import { CloseIcon, EditIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -10,50 +10,53 @@ import {
   Spacer,
   Text,
   useToast,
-} from '@chakra-ui/react'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { update } from '../features/login-auth/loginauth'
+} from '@chakra-ui/react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { update, updateUserByAdmin } from '../features/login-auth/loginauth';
 
-function AccountSettingsForm({ user }) {
-  const [editModeEmail, setEditModeEmail] = useState(false)
-  const [editModeUsername, setEditModeUsername] = useState(false)
-  const [editModePassword, setEditModePassword] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+function AccountSettingsForm({ user, adminEdit, setUserEditState }) {
+  const [editModeEmail, setEditModeEmail] = useState(false);
+  const [editModeUsername, setEditModeUsername] = useState(false);
+  const [editModePassword, setEditModePassword] = useState(false);
+  const [setErrorMessage] = useState('');
 
-  const toast = useToast()
+  const toast = useToast();
 
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    setValue,
-    formState: { isSubmitting },
-  } = useForm()
+  const { register, handleSubmit, getValues, setValue } = useForm();
 
   const onSubmit = async () => {
-    setErrorMessage('')
-    const newValues = getValues()
+    setErrorMessage('');
+    const newValues = getValues();
 
     try {
-      await update(user.username, { ...user, ...newValues })
+      const updatedUser = { ...user, ...newValues };
+      adminEdit
+        ? await updateUserByAdmin(user.username, updatedUser)
+        : await update(user.username, updatedUser);
+      console.log(adminEdit);
+
+      if (setUserEditState) {
+        setUserEditState(updatedUser);
+      }
+
       toast({
         title: 'Edit successful!',
         description: '',
         status: 'success',
         duration: 4000,
         isClosable: true,
-      })
-      setValue('password', '')
-      setEditModeEmail(false)
-      setEditModePassword(false)
-      setEditModeUsername(false)
+      });
+      setValue('password', '');
+      setEditModeEmail(false);
+      setEditModePassword(false);
+      setEditModeUsername(false);
     } catch (e) {
-      console.log(e)
-      setErrorMessage(e.response.data.message)
-      return
+      console.log(e);
+      setErrorMessage(e.response.data.message);
+      return;
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -141,7 +144,7 @@ function AccountSettingsForm({ user }) {
                 h={6}
                 cursor="pointer"
                 onClick={() => {
-                  setEditModeUsername(false)
+                  setEditModeUsername(false);
                 }}
               />
             </Center>
@@ -190,7 +193,7 @@ function AccountSettingsForm({ user }) {
                 h={6}
                 cursor="pointer"
                 onClick={() => {
-                  setEditModePassword(false)
+                  setEditModePassword(false);
                 }}
               />
             </Center>
@@ -202,7 +205,7 @@ function AccountSettingsForm({ user }) {
         )}
       </Flex>
     </form>
-  )
+  );
 }
 
-export default AccountSettingsForm
+export default AccountSettingsForm;

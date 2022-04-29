@@ -1,25 +1,47 @@
 import { useState, useEffect } from 'react';
+import { useStore } from 'react-redux';
 import axios from 'axios';
-import { Button, Select, Tr, Td } from '@chakra-ui/react';
+import {
+  Button,
+  Select,
+  Tr,
+  Td,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import SaveIcon from '@mui/icons-material/Save';
+import AccountSettingsForm from './accountSettingsForm';
+import loginauthreducer from '../features/login-auth/reducers/loginauthreducer';
 
 function AdminUserDetails(props) {
-  const [userRole, setUserRole] = useState(props.user.role);
+  const [userEditState, setUserEditState] = useState(props.user);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const store = useStore(loginauthreducer);
+  const state = store.getState();
 
   useEffect(() => {
-    setUserRole(props.user.role);
-  }, [props.user.role]);
+    setUserEditState(props.user);
+  }, [props.user]);
 
   return (
     <Tr>
-      <Td>{props.user.username}</Td>
+      <Td>{userEditState.username}</Td>
       <Td>
         <Select
           onChange={(e) => {
-            setUserRole(props.roles[e.target.options.selectedIndex]);
+            setUserEditState({
+              ...userEditState,
+              role: props.roles[e.target.options.selectedIndex],
+            });
           }}
-          defaultValue={props.user.role._id}
+          defaultValue={userEditState.role._id}
         >
           {props.roles.map((role) => (
             <option key={role._id} value={role._id}>
@@ -32,13 +54,13 @@ function AdminUserDetails(props) {
         <Button
           margin="0 1rem"
           rightIcon={<SaveIcon />}
-          isDisabled={userRole._id === props.user.role._id}
+          isDisabled={userEditState.role._id === props.user.role._id}
           onClick={() =>
             axios
               .put(
-                'http://localhost:5000/api/users/' + props.user.username,
+                'http://localhost:5000/api/users/' + userEditState.username,
                 {
-                  role: userRole._id,
+                  role: userEditState.role._id,
                 },
                 { withCredentials: true }
               )
@@ -51,12 +73,29 @@ function AdminUserDetails(props) {
         >
           Save
         </Button>
+        <Button onClick={onOpen}>Edit</Button>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>User settings</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <AccountSettingsForm
+                user={userEditState}
+                adminEdit={state.auth.user.username !== userEditState.username}
+                setUserEditState={setUserEditState}
+              />
+            </ModalBody>
+            <ModalFooter></ModalFooter>
+          </ModalContent>
+        </Modal>
+
         <Button
           rightIcon={<DeleteIcon />}
           onClick={() =>
             axios
               .delete(
-                'http://localhost:5000/api/users/' + props.user.username,
+                'http://localhost:5000/api/users/' + userEditState.username,
                 {
                   withCredentials: true,
                 }

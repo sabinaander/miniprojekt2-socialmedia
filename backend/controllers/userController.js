@@ -169,24 +169,20 @@ const deleteUser = asyncHandler(async (req, res) => {
     return;
   }
 
-
   // checks to see if cookie session id is existing
-  if(!req.session.id){
+  if (!req.session.id) {
     res.status(401);
     res.send({ message: 'Unauthorized save attempt.' });
     return;
   }
 
-  const username = req.params.username
-    const user = await User.findOne({ username: username })
+  const username = req.params.username;
+  const user = await User.findOne({ username: username })
     .populate('role')
     .exec();
 
-
-
   const adminRole = await Role.findOne({ name: 'admin' }).exec();
   const admins = await User.find({ role: adminRole }).exec();
-
 
   if (user.role.name === 'admin' && admins.length === 1) {
     res.status(406);
@@ -206,7 +202,6 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 // update user, right now you can only update a users role
 const updateUser = asyncHandler(async (req, res) => {
-
   // checks to see if cookie session id is existing
   if (!req.session.id) {
     res.status(401);
@@ -224,11 +219,9 @@ const updateUser = asyncHandler(async (req, res) => {
     return;
   }
 
-
   const user = await User.findOne({ username: req.params.username })
     .populate('role')
     .exec();
-
 
   if (!user) {
     res.status(400);
@@ -282,7 +275,11 @@ const updateUser = asyncHandler(async (req, res) => {
 
   await user.save();
 
-  res.send({ username: user.username, email: user.email, role: user.role });
+  res.send({
+    username: user.username,
+    email: user.email,
+    role: user.role.name,
+  });
 });
 
 // Get all users

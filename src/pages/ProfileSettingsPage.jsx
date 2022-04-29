@@ -1,4 +1,3 @@
-import { CloseIcon, EditIcon } from '@chakra-ui/icons'
 import {
   Divider,
   Container,
@@ -13,40 +12,40 @@ import {
   useDisclosure,
   ModalFooter,
   Heading,
-} from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
-import { useStore } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { deleteuser } from '../features/login-auth/loginauth'
-import loginauthreducer from '../features/login-auth/reducers/loginauthreducer'
-import { getUser } from '../features/login-auth/loginauthservice'
-import AccountSettingsForm from '../components/accountSettingsForm'
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { useStore } from 'react-redux';
+import { deleteuser } from '../features/login-auth/loginauth';
+import loginauthreducer from '../features/login-auth/reducers/loginauthreducer';
+import AccountSettingsForm from '../components/accountSettingsForm';
+import loginauthservice from '../features/login-auth/loginauthservice';
 
 function ProfileSettingsPage() {
-  const store = useStore(loginauthreducer)
-  const state = store.getState()
+  const store = useStore(loginauthreducer);
+  const state = store.getState();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn)
-  const [authUser, setAuthUser] = useState(state.auth.user)
-  const [user, setUser] = useState(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
+  const [authUser, setAuthUser] = useState(state.auth.user);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const user = await getUser(authUser.username)
-      setUser(user)
-    }
-    fetchUser()
-  }, [])
+      const user = await loginauthservice.getUser(authUser.username);
+      setUser(user);
+    };
+    fetchUser();
+  }, []);
 
   store.subscribe(async () => {
-    setIsLoggedIn(store.getState().auth.isLoggedIn)
-    setAuthUser(store.getState().auth.user)
-    const user = await getUser(store.getState().auth.user.username)
-    setUser(user)
-  })
+    setIsLoggedIn(store.getState().auth.isLoggedIn);
+    setAuthUser(store.getState().auth.user);
+    const user = await loginauthservice.getUser(
+      store.getState().auth.user.username
+    );
+    setUser(user);
+  });
 
-  const navigate = useNavigate()
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     !!isLoggedIn &&
@@ -96,7 +95,7 @@ function ProfileSettingsPage() {
         </Container>
       </Box>
     )
-  )
+  );
 }
 
-export default ProfileSettingsPage
+export default ProfileSettingsPage;

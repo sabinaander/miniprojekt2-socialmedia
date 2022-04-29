@@ -18,10 +18,7 @@ import { parseISO, formatDistanceToNow, format } from 'date-fns';
 import { useDispatch, useStore } from 'react-redux';
 import { Link as ReactLink } from 'react-router-dom';
 import { useState } from 'react';
-import {
-  likePost,
-  deletePost,
-} from '../features/blogPosts/postsSlice';
+import { likePost, deletePost } from '../features/blogPosts/postsSlice';
 import loginauthreducer from '../features/login-auth/reducers/loginauthreducer';
 import PostForm from './PostForm';
 
