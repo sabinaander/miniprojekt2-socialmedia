@@ -14,7 +14,7 @@ import {
   Button,
   useDisclosure,
   Text,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
@@ -24,6 +24,7 @@ import { logout } from "../features/login-auth/loginauth";
 import { useStore } from "react-redux";
 import { useState } from "react";
 import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
+
 
 function Header() {
   const store = useStore(loginauthreducer);
@@ -72,25 +73,34 @@ function Header() {
         <Spacer />
         <Center>
           <Flex gap={6}>
-            {
-              !isLoggedIn && (
-                <Button
-                  display={{ base: "block", md: "none" }}
-                  onClick={loginModal.onOpen}
-                >
-                  <PersonOutlineIcon fontSize="medium" color="action" />
-                </Button>
-              )
-            }
+            {!isLoggedIn && (
+              <Button
+                display={{ base: 'block', md: 'none' }}
+                onClick={loginModal.onOpen}
+              >
+                <PersonOutlineIcon fontSize="medium" color="action" />
+              </Button>
+            )}
             {/* USER IS LOGGED IN */}
             {isLoggedIn ? (
               <>
-                <Center >
-                  <Text fontSize="lg" mr={2} display={{ base: "none", md: "flex" }}>welcome in </Text>
-                  <Text fontSize="lg" fontWeight="bold" display={{ base: "none", sm: "flex" }}>
+                <Center>
+                  <Text
+                    fontSize="lg"
+                    mr={2}
+                    display={{ base: 'none', md: 'flex' }}
+                  >
+                    welcome in{' '}
+                  </Text>
+                  <Text
+                    fontSize="lg"
+                    fontWeight="bold"
+                    display={{ base: 'none', sm: 'flex' }}
+                  >
                     {user.username}
                   </Text>
                 </Center>
+                {/* ADD REDIRECT LATER!!! */}
                 <Button
                   onClick={setLogout}
                   borderRadius="md"
@@ -99,7 +109,7 @@ function Header() {
                   px={4}
                   h={7}
                   _hover={{
-                    background: "gray.600",
+                    background: 'gray.600',
                   }}
                 >
                   Log Out
@@ -115,7 +125,7 @@ function Header() {
                   color="white"
                   px={4}
                   h={8}
-                  display={{ base: "none", md: "block" }}
+                  display={{ base: 'none', md: 'block' }}
                 >
                   Log In
                   <Modal
@@ -154,7 +164,7 @@ function Header() {
                   color="white"
                   px={4}
                   h={8}
-                  display={{ base: "none", md: "block" }}
+                  display={{ base: 'none', md: 'block' }}
                 >
                   Signup
                   <Modal
