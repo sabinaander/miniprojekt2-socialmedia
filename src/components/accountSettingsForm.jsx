@@ -34,7 +34,6 @@ function AccountSettingsForm({ user, adminEdit, setUserEditState }) {
       adminEdit
         ? await updateUserByAdmin(user.username, updatedUser)
         : await update(user.username, updatedUser);
-      console.log(adminEdit);
 
       if (setUserEditState) {
         setUserEditState(updatedUser);
