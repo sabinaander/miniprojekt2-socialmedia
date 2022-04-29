@@ -27,7 +27,7 @@ import { update } from '../features/login-auth/loginauth';
 
 function ProfileHeader(props) {
   const toast = useToast();
-  const [setErrorMessage] = useState('');
+  const [,setErrorMessage] = useState('');
 
   const backgroundDisclosure = useDisclosure();
   const avatarDisclosure = useDisclosure();

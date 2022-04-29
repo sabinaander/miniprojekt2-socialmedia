@@ -32,7 +32,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 function ProfileBio(props) {
   const toast = useToast();
-  const [_, setErrorMessage] = useState("");
+  const [, setErrorMessage] = useState("");
 
   const bioDisclosure = useDisclosure();
   const websiteDisclosure = useDisclosure();

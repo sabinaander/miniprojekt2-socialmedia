@@ -21,7 +21,7 @@ import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
 function CreatePostModal(props) {
   const store = useStore(loginauthreducer);
   const state = store.getState();
-  const [_, setIsLoggedIn] = useState(state.auth.isLoggedIn);
+  const [, setIsLoggedIn] = useState(state.auth.isLoggedIn);
   const [user, setUser] = useState(state.auth.user);
 
   store.subscribe(() => {

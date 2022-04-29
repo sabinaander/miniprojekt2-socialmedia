@@ -19,7 +19,7 @@ function AccountSettingsForm({ user, adminEdit, setUserEditState }) {
   const [editModeEmail, setEditModeEmail] = useState(false);
   const [editModeUsername, setEditModeUsername] = useState(false);
   const [editModePassword, setEditModePassword] = useState(false);
-  const [setErrorMessage] = useState('');
+  const [,setErrorMessage] = useState('');
 
   const toast = useToast();
 
