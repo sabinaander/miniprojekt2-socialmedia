@@ -8,6 +8,7 @@ import AdminPageUsers from './pages/AdminPageUsers';
 import AdminPagePosts from './pages/AdminPagePosts';
 import ProfileSettingsPage from './pages/ProfileSettingsPage';
 import loginauthreducer from './features/login-auth/reducers/loginauthreducer';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
   const store = useStore(loginauthreducer);
@@ -30,6 +31,7 @@ function App() {
             <Route path="admin/posts" element={<AdminPagePosts />} />
           </>
         ) : null}
+        <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
   );
