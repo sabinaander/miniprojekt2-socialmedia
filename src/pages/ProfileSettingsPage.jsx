@@ -1,8 +1,7 @@
-import { CloseIcon, EditIcon } from "@chakra-ui/icons";
+import { CloseIcon, EditIcon } from '@chakra-ui/icons'
 import {
   Divider,
   Container,
-  Text,
   Box,
   Button,
   Modal,
@@ -13,90 +12,46 @@ import {
   ModalBody,
   useDisclosure,
   ModalFooter,
-  Flex,
   Heading,
-  Spacer,
-  useToast,
-  FormControl,
-  Input,
-  Center,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useStore } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { update, deleteuser } from "../features/login-auth/loginauth";
-import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
-import { getUser } from "../features/login-auth/loginauthservice";
-import { useForm } from "react-hook-form";
+} from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
+import { useStore } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { deleteuser } from '../features/login-auth/loginauth'
+import loginauthreducer from '../features/login-auth/reducers/loginauthreducer'
+import { getUser } from '../features/login-auth/loginauthservice'
+import AccountSettingsForm from '../components/accountSettingsForm'
 
 function ProfileSettingsPage() {
-  const store = useStore(loginauthreducer);
-  const state = store.getState();
+  const store = useStore(loginauthreducer)
+  const state = store.getState()
 
-  const [editModeEmail, setEditModeEmail] = useState(false);
-  const [editModeUsername, setEditModeUsername] = useState(false);
-  const [editModePassword, setEditModePassword] = useState(false);
-
-  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
-  const [authUser, setAuthUser] = useState(state.auth.user);
-  const [user, setUser] = useState(null);
-  const toast = useToast();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn)
+  const [authUser, setAuthUser] = useState(state.auth.user)
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     const fetchUser = async () => {
-      const user = await getUser(authUser.username);
-      setUser(user);
-    };
-    fetchUser();
-  }, []);
+      const user = await getUser(authUser.username)
+      setUser(user)
+    }
+    fetchUser()
+  }, [])
 
   store.subscribe(async () => {
-    setIsLoggedIn(store.getState().auth.isLoggedIn);
-    setAuthUser(store.getState().auth.user);
-    const user = await getUser(store.getState().auth.user.username);
-    setUser(user);
-  });
+    setIsLoggedIn(store.getState().auth.isLoggedIn)
+    setAuthUser(store.getState().auth.user)
+    const user = await getUser(store.getState().auth.user.username)
+    setUser(user)
+  })
 
-  const navigate = useNavigate();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    setValue,
-    formState: { isSubmitting },
-  } = useForm();
-
-  const onSubmit = async () => {
-    setErrorMessage("");
-    const newValues = getValues();
-
-    try {
-      const updateUser = await update(user.username, { ...user, ...newValues });
-      toast({
-        title: "Edit successful!",
-        description: "",
-        status: "success",
-        duration: 4000,
-        isClosable: true,
-      });
-      setValue("password", "");
-      setEditModeEmail(false);
-      setEditModePassword(false);
-      setEditModeUsername(false);
-    } catch (e) {
-      console.log(e);
-      setErrorMessage(e.response.data.message);
-      return;
-    }
-  };
+  const navigate = useNavigate()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     !!isLoggedIn &&
     !!user && (
-      <Box pt={10} pb={10} pl={1} pr={1} bg="gray.100" w="100%" >
+      <Box pt={10} pb={10} pl={1} pr={1} bg="gray.100" w="100%">
         <Container
           textAlign="center"
           padding={{ base: 0, sm: 5 }}
@@ -104,159 +59,14 @@ function ProfileSettingsPage() {
           backgroundColor="white"
         >
           <Heading>Account</Heading>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Divider border="2px" mt={6} mb={6} />
-            <Flex direction={{ base: "column", md: "row" }}>
-              <Text fontSize="2xl">Email</Text>
-              <Spacer />
-              {!editModeEmail && (
-                <Center>
-                  <Text>{user.email}</Text>
-                  <EditIcon
-                    cursor="pointer"
-                    ml={5}
-                    w={6}
-                    h={6}
-                    onClick={() => setEditModeEmail(true)}
-                  ></EditIcon>
-                </Center>
-              )}
-              {editModeEmail && (
-                <Box>
-                  <Center gap="1rem" mb={2}>
-                    <FormControl>
-                      <Input
-                        {...register("email", {
-                          required: true,
-                          value: user.email,
-                        })}
-                      />
-                    </FormControl>
-
-                    <CloseIcon
-                      border="solid 2px"
-                      borderRadius={4}
-                      p={1}
-                      w={6}
-                      h={6}
-                      cursor="pointer"
-                      onClick={() => setEditModeEmail(false)}
-                    />
-                  </Center>
-
-                  <Button type="submit" colorScheme="purple" isFullWidth>
-                    Save edit
-                  </Button>
-                </Box>
-              )}
-            </Flex>
-
-            <Divider border="2px" mt={6} mb={6} />
-
-            <Flex direction={{ base: "column", md: "row" }}>
-              <Text fontSize="2xl">Username</Text>
-              <Spacer />
-              {!editModeUsername && (
-                <Center>
-                  <Text>{user.username}</Text>
-                  <EditIcon
-                    ml={5}
-                    w={6}
-                    h={6}
-                    cursor="pointer"
-                    onClick={() => setEditModeUsername(true)}
-                  />
-                </Center>
-              )}
-
-              {editModeUsername && (
-                <Box>
-                  <Center gap="1rem" mb={2}>
-                    <FormControl>
-                      <Input
-                        {...register("username", {
-                          required: true,
-                          value: user.username,
-                        })}
-                      />
-                    </FormControl>
-
-                    <CloseIcon
-                      border="solid 2px"
-                      borderRadius={4}
-                      p={1}
-                      w={6}
-                      h={6}
-                      cursor="pointer"
-                      onClick={() => {
-                        setEditModeUsername(false);
-                      }}
-                    />
-                  </Center>
-
-                  <Button type="submit" colorScheme="purple" isFullWidth>
-                    Save edit
-                  </Button>
-                </Box>
-              )}
-            </Flex>
-
-            <Divider border="2px" mt={6} mb={6} />
-
-            <Flex direction={{ base: "column", md: "row" }}>
-              <Text fontSize="2xl">Password</Text>
-              <Spacer />
-              {!editModePassword && (
-                <Center>
-                  <Text>{user.password}</Text>
-                  <EditIcon
-                    cursor="pointer"
-                    ml={5}
-                    w={6}
-                    h={6}
-                    onClick={() => setEditModePassword(true)}
-                  ></EditIcon>
-                </Center>
-              )}
-              {editModePassword && (
-                <Box>
-                  <Center gap="1rem" mb={2}>
-                    <FormControl>
-                      <Input
-                        {...register("password", {
-                          required: true,
-                          value: user.password,
-                        })}
-                      />
-                    </FormControl>
-
-                    <CloseIcon
-                      border="solid 2px"
-                      borderRadius={4}
-                      p={1}
-                      w={6}
-                      h={6}
-                      cursor="pointer"
-                      onClick={() => {
-                        setEditModePassword(false);
-                      }}
-                    />
-                  </Center>
-
-                  <Button type="submit" colorScheme="purple" isFullWidth>
-                    Save edit
-                  </Button>
-                </Box>
-              )}
-            </Flex>
-          </form>
+          <AccountSettingsForm user={user} />
 
           <Divider border="2px" mt={6} mb={6} />
 
           <Button
             variant="outline"
             border="2px"
-            borderColor="gray.500"
+            colorScheme="red"
             onClick={onOpen}
           >
             Delete account
@@ -271,7 +81,7 @@ function ProfileSettingsPage() {
 
               <ModalFooter>
                 <Button
-                  colorScheme="blue"
+                  colorScheme="red"
                   mr={3}
                   onClick={() => deleteuser(user.username)}
                 >
@@ -286,7 +96,7 @@ function ProfileSettingsPage() {
         </Container>
       </Box>
     )
-  );
+  )
 }
 
-export default ProfileSettingsPage;
+export default ProfileSettingsPage
