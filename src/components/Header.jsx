@@ -16,7 +16,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
@@ -30,6 +30,7 @@ function Header() {
   const state = store.getState();
   const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
   const [user, setUser] = useState(state.auth.user);
+  let navigate = useNavigate();
 
   store.subscribe(() => {
     setIsLoggedIn(store.getState().auth.isLoggedIn);
@@ -38,6 +39,11 @@ function Header() {
 
   const loginModal = useDisclosure();
   const signupModal = useDisclosure();
+
+  const setLogout = (()=>{
+    logout()
+    navigate(`/`);
+  })
 
   return (
     <Container
@@ -86,7 +92,7 @@ function Header() {
                   </Text>
                 </Center>
                 <Button
-                  onClick={logout}
+                  onClick={setLogout}
                   borderRadius="md"
                   bg="black"
                   color="white"
