@@ -21,7 +21,6 @@ import { useState } from 'react';
 import {
   likePost,
   deletePost,
-  fetchPosts,
 } from '../features/blogPosts/postsSlice';
 import loginauthreducer from '../features/login-auth/reducers/loginauthreducer';
 import PostForm from './PostForm';
