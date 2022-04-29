@@ -1,8 +1,5 @@
 import {
   Flex,
-  InputGroup,
-  InputLeftElement,
-  Input,
   Center,
   Heading,
   Spacer,
@@ -19,20 +16,22 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import { Link } from 'react-router-dom';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import LoginForm from './LoginForm';
-import SignupForm from './SignupForm';
-import { logout } from '../features/login-auth/loginauth';
-import { useStore } from 'react-redux';
-import { useState } from 'react';
-import loginauthreducer from '../features/login-auth/reducers/loginauthreducer';
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
+import { logout } from "../features/login-auth/loginauth";
+import { useStore } from "react-redux";
+import { useState } from "react";
+import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
+
 
 function Header() {
   const store = useStore(loginauthreducer);
   const state = store.getState();
   const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
   const [user, setUser] = useState(state.auth.user);
+  let navigate = useNavigate();
 
   store.subscribe(() => {
     setIsLoggedIn(store.getState().auth.isLoggedIn);
@@ -41,6 +40,11 @@ function Header() {
 
   const loginModal = useDisclosure();
   const signupModal = useDisclosure();
+
+  const setLogout = (()=>{
+    logout()
+    navigate(`/`);
+  })
 
   return (
     <Container
@@ -98,7 +102,7 @@ function Header() {
                 </Center>
                 {/* ADD REDIRECT LATER!!! */}
                 <Button
-                  onClick={logout}
+                  onClick={setLogout}
                   borderRadius="md"
                   bg="black"
                   color="white"

@@ -25,8 +25,8 @@ import { useState } from 'react';
 import { update } from '../features/login-auth/loginauth';
 
 function ProfileHeader(props) {
-  const toast = useToast();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [_, setErrorMessage] = useState("");
+
 
   const backgroundDisclosure = useDisclosure();
   const avatarDisclosure = useDisclosure();
@@ -35,8 +35,6 @@ function ProfileHeader(props) {
     register,
     handleSubmit,
     getValues,
-    setValue,
-    formState: { isSubmitting },
   } = useForm();
 
   const onSubmit = async () => {

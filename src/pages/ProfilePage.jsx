@@ -1,5 +1,4 @@
-import { Divider, Container, Text, Box } from "@chakra-ui/react";
-// import UserControlHeader from "../components/UserControlHeader";
+import { Divider, Text, Box } from "@chakra-ui/react";
 import CreatePostModal from "../components/CreatePostModal";
 import ProfileBio from "../components/ProfileBio";
 import ProfileHeader from "../components/ProfileHeader";
