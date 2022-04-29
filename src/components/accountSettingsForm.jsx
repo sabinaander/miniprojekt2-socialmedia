@@ -36,7 +36,7 @@ function AccountSettingsForm({ user }) {
     const newValues = getValues()
 
     try {
-      const updateUser = await update(user.username, { ...user, ...newValues })
+      await update(user.username, { ...user, ...newValues })
       toast({
         title: 'Edit successful!',
         description: '',
