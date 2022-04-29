@@ -66,7 +66,13 @@ function PostCard({ post }) {
       borderRadius="lg"
       overflow="hidden"
     >
-      <Image src={post.imageUrl} alt={post.imageAlt} />
+      <Image
+        h="20rem"
+        objectFit="cover"
+        width="100%"
+        src={post.imageUrl}
+        alt={post.imageAlt}
+      />
 
       <Box p="6">
         <Box display="flex" alignItems="baseline">
@@ -126,7 +132,6 @@ function PostCard({ post }) {
         >
           Comment
         </Box> */}
-
 
         {post.author === user?.username && (
           <>
