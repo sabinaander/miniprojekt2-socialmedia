@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useDispatch, useStore } from 'react-redux'
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useStore } from 'react-redux';
 import {
   Input,
   Stack,
@@ -11,28 +11,28 @@ import {
   Box,
   VStack,
   useToast,
-} from '@chakra-ui/react'
-import { addNewPost, editPost } from '../features/blogPosts/postsSlice'
-import loginauthreducer from '../features/login-auth/reducers/loginauthreducer'
+} from '@chakra-ui/react';
+import { addNewPost, editPost } from '../features/blogPosts/postsSlice';
+import loginauthreducer from '../features/login-auth/reducers/loginauthreducer';
 
 function PostForm({ onClose, postData }) {
-  const store = useStore(loginauthreducer)
-  const state = store.getState()
-  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn)
-  const [user, setUser] = useState(state.auth.user)
+  const store = useStore(loginauthreducer);
+  const state = store.getState();
+  const [isLoggedIn, setIsLoggedIn] = useState(state.auth.isLoggedIn);
+  const [user, setUser] = useState(state.auth.user);
 
   store.subscribe(() => {
-    setIsLoggedIn(store.getState().auth.isLoggedIn)
-    setUser(store.getState().auth.user)
-  })
+    setIsLoggedIn(store.getState().auth.isLoggedIn);
+    setUser(store.getState().auth.user);
+  });
   const {
     handleSubmit,
     register,
     formState: { isSubmitting },
-  } = useForm()
+  } = useForm();
 
-  const dispatch = useDispatch()
-  const toast = useToast()
+  const dispatch = useDispatch();
+  const toast = useToast();
 
   const onSubmit = (data) => {
     try {
@@ -44,14 +44,14 @@ function PostForm({ onClose, postData }) {
             imageUrl: data.imageUrl,
             author: user.username,
           })
-        )
-        onClose()
+        );
+        onClose();
         toast({
           title: 'Submitted!',
           status: 'success',
           duration: 3000,
           isClosable: true,
-        })
+        });
       } else {
         dispatch(
           editPost({
@@ -60,14 +60,13 @@ function PostForm({ onClose, postData }) {
             content: data.content,
             imageUrl: data.imageUrl,
           })
-        )
-        onClose()
+        );
+        onClose();
       }
-      // reset(data) // - not working, needs investigating
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
   return (
     <Flex align="center" justify="center">
       <Box bg="white" p={6} rounded="md">
@@ -123,7 +122,7 @@ function PostForm({ onClose, postData }) {
         </form>
       </Box>
     </Flex>
-  )
+  );
 }
 
-export default PostForm
+export default PostForm;
