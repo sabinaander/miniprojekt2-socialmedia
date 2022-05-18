@@ -63,14 +63,8 @@ function AdminPagePostsContent() {
   }
 
   return (
-    <Flex
-      bg="whiteAlpha.100"
-      h="fit-content"
-      minHeight="100vh"
-      w="100%"
-      justifyContent="center"
-    >
-      <Box w="70%" bg="gray.200">
+    <Flex bg="whiteAlpha.100" h="fit-content" w="100%" justifyContent="center">
+      <Box w="90%" bg="gray.200">
         <Heading
           bg="gray.300"
           padding="2rem"

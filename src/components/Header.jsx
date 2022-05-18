@@ -16,15 +16,14 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import LoginForm from "./LoginForm";
-import SignupForm from "./SignupForm";
-import { logout } from "../features/login-auth/loginauth";
-import { useStore } from "react-redux";
-import { useState } from "react";
-import loginauthreducer from "../features/login-auth/reducers/loginauthreducer";
-
+import { Link, useNavigate } from 'react-router-dom';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
+import { logout } from '../features/login-auth/loginauth';
+import { useStore } from 'react-redux';
+import { useState } from 'react';
+import loginauthreducer from '../features/login-auth/reducers/loginauthreducer';
 
 function Header() {
   const store = useStore(loginauthreducer);
@@ -41,10 +40,10 @@ function Header() {
   const loginModal = useDisclosure();
   const signupModal = useDisclosure();
 
-  const setLogout = (()=>{
-    logout()
+  const setLogout = () => {
+    logout();
     navigate(`/`);
-  })
+  };
 
   return (
     <Container
@@ -60,14 +59,6 @@ function Header() {
               Socialmblr
             </Heading>
           </Link>
-
-          {/* <InputGroup display={{ base: "none", md: "block" }}>
-            <InputLeftElement
-              pointerEvents="none"
-              children={<SearchIcon color="gray.300" />}
-            />
-            <Input placeholder="Search for posts..." />
-          </InputGroup> */}
         </Center>
 
         <Spacer />
@@ -100,7 +91,6 @@ function Header() {
                     {user.username}
                   </Text>
                 </Center>
-                {/* ADD REDIRECT LATER!!! */}
                 <Button
                   onClick={setLogout}
                   borderRadius="md"

@@ -42,8 +42,8 @@ function AdminContent() {
 
   return (
     <>
-      <Flex bg="whiteAlpha.100" h="800px" w="100%" justifyContent="center">
-        <Box w="70%" bg="gray.200">
+      <Flex bg="whiteAlpha.100" w="100%" justifyContent="center">
+        <Box bg="gray.100" w="90%">
           <Heading bg="gray.300" padding="2rem" textAlign="center" size="lg">
             User Management
           </Heading>
