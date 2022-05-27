@@ -57,4 +57,6 @@ password: admin
 runs the project with concurrently
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+link to github https://github.com/sabinaander/miniprojekt2-socialmedia
+
 
