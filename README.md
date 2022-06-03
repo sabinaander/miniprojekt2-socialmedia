@@ -1,5 +1,7 @@
 # Socialmblr
 
+[Link to repo - https://github.com/sabinaander/miniprojekt2-socialmedia](https://github.com/sabinaander/miniprojekt2-socialmedia)
+
 A social media app created in the course of dynamic web development.
 
 School: Medieinsitutet Gothenburg
@@ -11,11 +13,11 @@ Date: 2022-04-29
 Time for coding: 8 working days.
 
 ### Coders:
-Tomas Fridekrans
+[Tomas Fridekrans](https://github.com/spaceflake)
 
-Olivia Isberg
+[Olivia Isberg](https://github.com/OliviaIsberg)
 
-Sabina Andersson
+[Sabina Andersson](https://github.com/sabinaander)
 
 ## About
 
